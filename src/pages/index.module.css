@@ -17,27 +17,24 @@
 .bace {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
   width: 300px;
   height: 450px;
-  background-color: gray;
+  background-color: #aaa;
 }
 
 .board {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-end;
   width: 270px;
   height: 270px;
-  background-color: black;
-  border-color: outset 5px #141414;
+  background-color: #aaa;
 }
 
 .cell {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 30px;
   height: 30px;
-  background-color: gray;
-  border: solid 2px #707070;
+  background-color: #ccc;
+  border: outset 5px #ddd;
 }
