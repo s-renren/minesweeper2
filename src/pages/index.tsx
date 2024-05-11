@@ -26,12 +26,15 @@ const Home = () => {
       {/* <div className={styles.sampleStyle} style={{backgroundPosition: `${-30*samplePos}px 0px`}} />
       <button onClick={() => setSamplePos((p) => (p + 1) % 14)}>sample</button> */}
       <div className={styles.bace}>
-        <div className={styles.board}>
-          {userInput.map((row, y) =>
-            row.map((color, x) => (
-              <div className={styles.cell} key={`${x}-${y}`} onClick={() => clickHandler(x, y)} />
-            )),
-          )}
+        <div className={styles.fancarea} />
+        <div className={styles.boardarea}>
+          <div className={styles.board}>
+            {userInput.map((row, y) =>
+              row.map((color, x) => (
+                <div className={styles.cell} key={`${x}-${y}`} onClick={() => clickHandler(x, y)} />
+              )),
+            )}
+          </div>
         </div>
       </div>
     </div>
