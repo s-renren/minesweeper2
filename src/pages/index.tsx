@@ -26,9 +26,31 @@ const Home = () => {
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
   ]);
 
-  const isStart = !bombMap.flat().includes(1);
+  const [board, setBoard] = useState([
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  ]);
 
-  const img = 1;
+  const directions = [
+    [-1, -1],
+    [-1, 0],
+    [-1, 1],
+    [0, -1],
+    [0, 1],
+    [1, -1],
+    [1, 0],
+    [1, 1],
+  ];
+
+  const isStart = !bombMap.flat().includes(1);
+  const img = 0;
 
   const clickHandler = (x: number, y: number) => {
     const newUserInput = structuredClone(userInput);
@@ -43,11 +65,24 @@ const Home = () => {
             continue;
           } else {
             newBombMap[randomY][randomX] = 1;
+            console.log('a');
           }
         }
-        setBombMap(bombMap);
+        setBombMap(newBombMap);
       }
-      newUserInput[y][x] = (newUserInput[y][x] + 1) % 4;
+
+      if (newBombMap[y][x] !== 1) {
+        newUserInput[y][x] = (newUserInput[y][x] + 1) % 4;
+        console.log(newBombMap[y][x]);
+      } else if (newBombMap[y][x] === 1) {
+        newBombMap.forEach((row, x) =>
+          row.forEach((n, y) => {
+            if (newBombMap[y][x] === 1) {
+              newUserInput[y][x] = 11;
+            }
+          }),
+        );
+      }
       setUserInput(newUserInput);
     }
   };
@@ -62,12 +97,18 @@ const Home = () => {
           <div className={styles.board}>
             {userInput.map((row, y) =>
               row.map((color, x) => (
-                <div
-                  className={color === 0 ? styles.cell : styles.none}
-                  style={{ backgroundPosition: `${-30 * (img - 1) - 2}px -2px` }}
-                  key={`${x}-${y}`}
-                  onClick={() => clickHandler(x, y)}
-                />
+                <div key={`${x}-${y}`}>
+                  <div
+                    onClick={() => clickHandler(x, y)}
+                    style={{ backgroundPosition: `${-30 * (userInput[y][x] - 1)}px 0px` }}
+                    className={color === 0 ? styles.cell : ''}
+                  >
+                    <div
+                      style={{ backgroundPosition: `${-30 * (board[y][x] - 1)}px 0px` }}
+                      className={color !== 0 ? styles.none : ''}
+                    />
+                  </div>
+                </div>
               )),
             )}
           </div>
