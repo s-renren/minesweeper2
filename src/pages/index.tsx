@@ -38,59 +38,67 @@ const Home = () => {
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
   ]);
 
-  const directions = [
-    [-1, -1],
-    [-1, 0],
-    [-1, 1],
-    [0, -1],
-    [0, 1],
-    [1, -1],
-    [1, 0],
-    [1, 1],
-  ];
-
   const isStart = !bombMap.flat().includes(1);
-  const img = 0;
+  const isEnd = board.flat().includes(11);
+
+  // const aroundBombNum = (
+  //   aroundBoard: number[][],
+  //   aroundBombMap: number[][],
+  //   x: number,
+  //   y: number,
+  // ) => {
+  //   aroundBoard[y][x] = [-1, 0, 1]
+  //     .map((dx) => {
+  //       [-1, 0, 1].map((dy) => {
+  //         aroundBombMap[y + dy][x + dx] !== undefined && aroundBombMap[y + dy][x + dx] === 1;
+  //       });
+  //     })
+  //     .flat()
+  //     .filter(Boolean).length;
+  //     console.log(aroundBoard[y][x])
+  // };
 
   const clickHandler = (x: number, y: number) => {
     const newUserInput = structuredClone(userInput);
     const newBombMap = structuredClone(bombMap);
+    const newBoard = structuredClone(board);
 
-    if (newUserInput[y][x] === 0) {
-      if (isStart) {
-        while (newBombMap.flat().filter((num) => num === 1).length < 10) {
-          const randomX = Math.floor(Math.random() * 9);
-          const randomY = Math.floor(Math.random() * 9);
-          if (randomX === x && randomY === y) {
-            continue;
-          } else {
-            newBombMap[randomY][randomX] = 1;
-            console.log('a');
-          }
-        }
-        setBombMap(newBombMap);
-      }
-
-      if (newBombMap[y][x] !== 1) {
-        newUserInput[y][x] = (newUserInput[y][x] + 1) % 4;
-        console.log(newBombMap[y][x]);
-      } else if (newBombMap[y][x] === 1) {
-        newBombMap.forEach((row, x) =>
-          row.forEach((n, y) => {
-            if (newBombMap[y][x] === 1) {
-              newUserInput[y][x] = 11;
+    if (!isEnd) {
+      if (newUserInput[y][x] === 0) {
+        if (isStart) {
+          while (newBombMap.flat().filter((num) => num === 1).length < 10) {
+            const randomX = Math.floor(Math.random() * 9);
+            const randomY = Math.floor(Math.random() * 9);
+            if (randomX === x && randomY === y) {
+              continue;
+            } else {
+              newBombMap[randomY][randomX] = 1;
             }
-          }),
-        );
+          }
+          setBombMap(newBombMap);
+        }
+
+        if (newBombMap[y][x] !== 1) {
+          newUserInput[y][x] = (newUserInput[y][x] + 1) % 4;
+          // aroundBombNum(newBoard, newBombMap, x, y);
+        } else if (newBombMap[y][x] === 1) {
+          newBombMap.forEach((row, x) =>
+            row.forEach((n, y) => {
+              if (newBombMap[y][x] === 1) {
+                newBoard[y][x] = 11;
+                newUserInput[y][x] = (newUserInput[y][x] + 1) % 4;
+              }
+            }),
+          );
+          setBoard(newBoard);
+        }
+        setUserInput(newUserInput);
       }
-      setUserInput(newUserInput);
     }
   };
 
   return (
     <div className={styles.container}>
-      {/* <div className={styles.sampleStyle} style={{backgroundPosition: `${-30*samplePos}px 0px`}} />
-      <button onClick={() => setSamplePos((p) => (p + 1) % 14)}>sample</button> */}
       <div className={styles.bace}>
         <div className={styles.fancarea} />
         <div className={styles.boardarea}>
