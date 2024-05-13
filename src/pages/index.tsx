@@ -41,22 +41,25 @@ const Home = () => {
   const isStart = !bombMap.flat().includes(1);
   const isEnd = board.flat().includes(11);
 
-  const aroundBombNum = (
-    aroundBoard: number[][],
-    aroundBombMap: number[][],
-    x: number,
-    y: number,
-  ) => {
-    let aroundBombN: number = 0;
-    [-1, 0, 1].forEach((dx) => {
-      [-1, 0, 1].forEach((dy) => {
-        if (aroundBombMap[y + dy] !== undefined && aroundBombMap[y + dy][x + dx] === 1) {
-          aroundBombN += 1;
-        }
+  const aroundBombNum = (newBoard: number[][], newBombMap: number[][], x: number, y: number) => {
+    newBoard[y][x] = [-1, 0, 1]
+      .map((dx) => {
+        return [-1, 0, 1].map((dy) => {
+          return newBoard[y + dy] !== undefined && newBombMap[y + dy][x + dx] === 1 ? 1 : 0;
+        });
+      })
+      .flat()
+      .filter(Boolean).length;
+
+    if (newBoard[y][x] === 0) {
+      [-1, 0, 1].forEach((dx) => {
+        [-1, 0, 1].forEach((dy) => {
+          if (newBoard[y + dy] !== undefined && newBoard[y + dy][x + dx] === -1) {
+            aroundBombNum(newBoard, newBombMap, x + dx, y + dy);
+          }
+        });
       });
-    });
-    aroundBoard[y][x] = aroundBombN;
-    console.log(aroundBoard[y][x]);
+    }
   };
 
   const clickHandler = (x: number, y: number) => {
@@ -78,7 +81,6 @@ const Home = () => {
           }
           setBombMap(newBombMap);
         }
-
         if (newBombMap[y][x] !== 1) {
           newUserInput[y][x] = (newUserInput[y][x] + 1) % 4;
           aroundBombNum(newBoard, newBombMap, x, y);
@@ -91,8 +93,8 @@ const Home = () => {
               }
             }),
           );
-          setBoard(newBoard);
         }
+        setBoard(newBoard);
         setUserInput(newUserInput);
       }
     }
@@ -104,15 +106,15 @@ const Home = () => {
         <div className={styles.fancarea} />
         <div className={styles.boardarea}>
           <div className={styles.board}>
-            {userInput.map((row, y) =>
+            {board.map((row, y) =>
               row.map((number, x) => (
                 <div key={`${x}-${y}`}>
                   <div
                     onClick={() => clickHandler(x, y)}
                     style={{
-                      backgroundPosition: `${number === 0 ? -30 * (userInput[y][x] - 1) : -30 * (board[y][x] - 1)}px 0px`,
+                      backgroundPosition: `${number !== -1 ? -30 * (board[y][x] - 1) : -30 * (userInput[y][x] - 1)}px 0px`,
                     }}
-                    className={number === 0 ? styles.stone : styles.cell}
+                    className={number !== -1 ? styles.cell : styles.stone}
                   />
                 </div>
               )),
