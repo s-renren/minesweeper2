@@ -27,15 +27,15 @@ const Home = () => {
   ]);
 
   const [board, setBoard] = useState([
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
   ]);
 
   const isStart = !bombMap.flat().includes(1);
@@ -105,18 +105,15 @@ const Home = () => {
         <div className={styles.boardarea}>
           <div className={styles.board}>
             {userInput.map((row, y) =>
-              row.map((color, x) => (
+              row.map((number, x) => (
                 <div key={`${x}-${y}`}>
                   <div
                     onClick={() => clickHandler(x, y)}
-                    style={{ backgroundPosition: `${-30 * (userInput[y][x] - 1)}px 0px` }}
-                    className={color === 0 ? styles.stone : ''}
-                  >
-                    <div
-                      style={{ backgroundPosition: `${-30 * (board[y][x] - 1)}px 0px` }}
-                      className={color !== 0 ? styles.cell : ''}
-                    />
-                  </div>
+                    style={{
+                      backgroundPosition: `${number === 0 ? -30 * (userInput[y][x] - 1) : -30 * (board[y][x] - 1)}px 0px`,
+                    }}
+                    className={number === 0 ? styles.stone : styles.cell}
+                  />
                 </div>
               )),
             )}
