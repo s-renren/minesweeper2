@@ -41,22 +41,23 @@ const Home = () => {
   const isStart = !bombMap.flat().includes(1);
   const isEnd = board.flat().includes(11);
 
-  // const aroundBombNum = (
-  //   aroundBoard: number[][],
-  //   aroundBombMap: number[][],
-  //   x: number,
-  //   y: number,
-  // ) => {
-  //   aroundBoard[y][x] = [-1, 0, 1]
-  //     .map((dx) => {
-  //       [-1, 0, 1].map((dy) => {
-  //         aroundBombMap[y + dy][x + dx] !== undefined && aroundBombMap[y + dy][x + dx] === 1;
-  //       });
-  //     })
-  //     .flat()
-  //     .filter(Boolean).length;
-  //     console.log(aroundBoard[y][x])
-  // };
+  const aroundBombNum = (
+    aroundBoard: number[][],
+    aroundBombMap: number[][],
+    x: number,
+    y: number,
+  ) => {
+    let aroundBombN: number = 0;
+    [-1, 0, 1].forEach((dx) => {
+      [-1, 0, 1].forEach((dy) => {
+        if (aroundBombMap[y + dy] !== undefined && aroundBombMap[y + dy][x + dx] === 1) {
+          aroundBombN += 1;
+        }
+      });
+    });
+    aroundBoard[y][x] = aroundBombN;
+    console.log(aroundBoard[y][x]);
+  };
 
   const clickHandler = (x: number, y: number) => {
     const newUserInput = structuredClone(userInput);
@@ -80,7 +81,7 @@ const Home = () => {
 
         if (newBombMap[y][x] !== 1) {
           newUserInput[y][x] = (newUserInput[y][x] + 1) % 4;
-          // aroundBombNum(newBoard, newBombMap, x, y);
+          aroundBombNum(newBoard, newBombMap, x, y);
         } else if (newBombMap[y][x] === 1) {
           newBombMap.forEach((row, x) =>
             row.forEach((n, y) => {
@@ -109,11 +110,11 @@ const Home = () => {
                   <div
                     onClick={() => clickHandler(x, y)}
                     style={{ backgroundPosition: `${-30 * (userInput[y][x] - 1)}px 0px` }}
-                    className={color === 0 ? styles.cell : ''}
+                    className={color === 0 ? styles.stone : ''}
                   >
                     <div
                       style={{ backgroundPosition: `${-30 * (board[y][x] - 1)}px 0px` }}
-                      className={color !== 0 ? styles.none : ''}
+                      className={color !== 0 ? styles.cell : ''}
                     />
                   </div>
                 </div>
