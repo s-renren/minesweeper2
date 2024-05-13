@@ -43,11 +43,11 @@ const Home = () => {
 
   const aroundBombNum = (newBoard: number[][], newBombMap: number[][], x: number, y: number) => {
     newBoard[y][x] = [-1, 0, 1]
-      .map((dx) => {
-        return [-1, 0, 1].map((dy) => {
-          return newBoard[y + dy] !== undefined && newBombMap[y + dy][x + dx] === 1 ? 1 : 0;
-        });
-      })
+      .map((dx) =>
+        [-1, 0, 1].map(
+          (dy) => newBombMap[y + dy] !== undefined && newBombMap[y + dy][x + dx] === 1,
+        ),
+      )
       .flat()
       .filter(Boolean).length;
 
