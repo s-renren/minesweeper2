@@ -68,7 +68,7 @@ const Home = () => {
     const newBoard = structuredClone(board);
 
     if (!isEnd) {
-      if (newUserInput[y][x] === 0) {
+      if (newBoard[y][x] === -1) {
         if (isStart) {
           while (newBombMap.flat().filter((num) => num === 1).length < 10) {
             const randomX = Math.floor(Math.random() * 9);
@@ -102,6 +102,15 @@ const Home = () => {
 
   const clickRight = (x: number, y: number, event: React.MouseEvent) => {
     event.preventDefault();
+    const newBoard = structuredClone(board);
+    if (newBoard[y][x] === -1 || newBoard[y][x] === 9 || newBoard[y][x] === 10) {
+      newBoard[y][x] === -1
+        ? (newBoard[y][x] = 9)
+        : newBoard[y][x] === 9
+          ? (newBoard[y][x] = 10)
+          : (newBoard[y][x] = -1);
+    }
+    setBoard(newBoard);
   };
 
   return (
@@ -117,9 +126,20 @@ const Home = () => {
                     onClick={() => clickHandler(x, y)}
                     onContextMenu={(event) => clickRight(x, y, event)}
                     style={{
-                      backgroundPosition: `${number !== -1 ? -30 * (board[y][x] - 1) : -30 * (userInput[y][x] - 1)}px 0px`,
+                      backgroundPosition:
+                        number === -1
+                          ? `${-30 * (userInput[y][x] - 1)}px -1px`
+                          : number === 9 || number === 10
+                            ? `${-30 * (board[y][x] - 1)-4}px -4px`
+                            : `${-30 * (board[y][x] - 1)}px -1px`,
                     }}
-                    className={number !== -1 ? styles.cell : styles.stone}
+                    className={
+                      number === -1
+                        ? styles.stone
+                        : number === 9 || number === 10
+                          ? `${styles.stone} ${styles.flag}`
+                          : styles.cell
+                    }
                   />
                 </div>
               )),

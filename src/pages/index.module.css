@@ -57,6 +57,14 @@
   border: outset 5px #ddd;
 }
 
+.flag {
+  width: 30px;
+  height: 30px;
+  background: url('~/src/assets/img/minesweepericon.png') no-repeat;
+  background-color: #ccc;
+  border: outset 5px #ddd;
+}
+
 .cell {
   width: 30px;
   height: 30px;
