@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import styles from './index.module.css';
 
 const Home = () => {
@@ -100,6 +100,10 @@ const Home = () => {
     }
   };
 
+  const clickRight = (x: number, y: number, event: React.MouseEvent) => {
+    event.preventDefault();
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.bace}>
@@ -111,6 +115,7 @@ const Home = () => {
                 <div key={`${x}-${y}`}>
                   <div
                     onClick={() => clickHandler(x, y)}
+                    onContextMenu={(event) => clickRight(x, y, event)}
                     style={{
                       backgroundPosition: `${number !== -1 ? -30 * (board[y][x] - 1) : -30 * (userInput[y][x] - 1)}px 0px`,
                     }}
