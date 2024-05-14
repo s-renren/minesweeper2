@@ -128,10 +128,10 @@ const Home = () => {
                     style={{
                       backgroundPosition:
                         number === -1
-                          ? `${-30 * (userInput[y][x] - 1)}px -1px`
+                          ? `${-30 * (userInput[y][x] - 1)}px 0px`
                           : number === 9 || number === 10
-                            ? `${-30 * (board[y][x] - 1)-4}px -4px`
-                            : `${-30 * (board[y][x] - 1)}px -1px`,
+                            ? `${-30 * (board[y][x] - 1)-2}px -3px`
+                            : `${-30 * (board[y][x] - 1)+2}px 0px`,
                     }}
                     className={
                       number === -1
