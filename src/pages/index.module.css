@@ -19,8 +19,8 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  width: 380px;
-  height: 490px;
+  width: 360px;
+  height: 450px;
   background-color: #ccc;
   border: outset 5px #eee;
 }
@@ -28,10 +28,34 @@
 .fancarea {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
   width: 324px;
-  height: 70px;
+  height: 60px;
   background-color: #ccc;
   border: inset 5px #e8e6e3;
+}
+
+.smile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: url('~/src/assets/img/minesweepericon.png') no-repeat;
+  background-color: #ccc;
+  border: outset 5px #ddd;
+}
+
+.numberStyles {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90px;
+  height: 45px;
+  margin-right: 5px;
+  margin-left: 5px;
+  background-color: #aaa;
 }
 
 .boardarea {

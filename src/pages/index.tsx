@@ -155,7 +155,13 @@ const Home = () => {
   return (
     <div className={styles.container}>
       <div className={styles.bace}>
-        <div className={styles.fancarea} />
+        <div className={styles.fancarea} >
+          <div className={styles.numberStyles} />
+          <div className={styles.smile}
+            style={{backgroundPosition: isEnd ?  (`${-30 * ( 13) + 1}px 0px`)
+          :  `${-30 * (11) +1}px 0px`}} />
+          <div className={styles.numberStyles} />
+        </div>
         <div className={styles.boardarea}>
           <div className={styles.board}>
             {board.map((row, y) =>
@@ -170,7 +176,7 @@ const Home = () => {
                           ? `${-30 * (userInput[y][x] + 6) - 1}px -2px`
                           : number === -1
                             ? `${-30 * (userInput[y][x] - 1)}px 0px`
-                            : `${-30 * (board[y][x] - 1) + 2}px 0px`,
+                            : `${-30 * (board[y][x] - 1) + 2}px 2px`,
                     }}
                     className={
                       number === -1
