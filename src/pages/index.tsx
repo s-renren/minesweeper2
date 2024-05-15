@@ -39,7 +39,17 @@ const Home = () => {
   ];
 
   const isStart = !bombMap.flat().includes(1);
-  const isEnd = board.flat().includes(11);
+  let isEnd = false;
+
+  userInput.forEach((row, y) => {
+    row.forEach((n, x) => {
+      if (n === 1) {
+        if (bombMap[y][x] === 1) {
+          isEnd = true;
+        }
+      }
+    });
+  });
 
   const aroundBombNum = (
     board: number[][],
@@ -48,24 +58,26 @@ const Home = () => {
     x: number,
     y: number,
   ) => {
-    if (userInput[y][x] !== 2 || userInput[y][x] !== 3) {
-      board[y][x] = [-1, 0, 1]
-        .map((dx) =>
-          [-1, 0, 1].map(
-            (dy) => newBombMap[y + dy] !== undefined && newBombMap[y + dy][x + dx] === 1,
-          ),
-        )
-        .flat()
-        .filter(Boolean).length;
+    if (bombMap[y][x] !== 1) {
+      if (userInput[y][x] !== 2 || userInput[y][x] !== 3) {
+        board[y][x] = [-1, 0, 1]
+          .map((dx) =>
+            [-1, 0, 1].map(
+              (dy) => newBombMap[y + dy] !== undefined && newBombMap[y + dy][x + dx] === 1,
+            ),
+          )
+          .flat()
+          .filter(Boolean).length;
 
-      if (board[y][x] === 0) {
-        [-1, 0, 1].forEach((dx) => {
-          [-1, 0, 1].forEach((dy) => {
-            if (board[y + dy] !== undefined && board[y + dy][x + dx] === -1) {
-              aroundBombNum(board, newBombMap, userInput, x + dx, y + dy);
-            }
+        if (board[y][x] === 0) {
+          [-1, 0, 1].forEach((dx) => {
+            [-1, 0, 1].forEach((dy) => {
+              if (board[y + dy] !== undefined && board[y + dy][x + dx] === -1) {
+                aroundBombNum(board, newBombMap, userInput, x + dx, y + dy);
+              }
+            });
           });
-        });
+        }
       }
     }
   };
@@ -95,6 +107,7 @@ const Home = () => {
             row.forEach((n, y) => {
               if (newBombMap[y][x] === 1) {
                 board[y][x] = 11;
+                console.log('s');
                 newUserInput[y][x] = 1;
                 console.log(board[y][x]);
               }
@@ -104,6 +117,7 @@ const Home = () => {
         setUserInput(newUserInput);
       }
     }
+    console.log(board);
   };
 
   const clickRight = (x: number, y: number, event: React.MouseEvent) => {
@@ -121,14 +135,19 @@ const Home = () => {
 
   userInput.forEach((row, dy) => {
     row.forEach((isClick, dx) => {
-      if (isClick === 1) {
-        aroundBombNum(board, bombMap, userInput, dx, dy);
-      } else if (isClick === 2 || isClick === 3) {
+      if (isClick === 2 || isClick === 3) {
         isClick === 2
           ? (board[dy][dx] = 9)
           : isClick === 3
             ? (board[dy][dx] = 10)
             : (board[dy][dx] = -1);
+      }
+      if (bombMap[dy][dx] !== 1) {
+        if (isClick === 1) {
+          aroundBombNum(board, bombMap, userInput, dx, dy);
+        }
+      } else if (isClick === 1 && bombMap[dy][dx] === 1) {
+        board[dy][dx] = 11;
       }
     });
   });
@@ -147,13 +166,11 @@ const Home = () => {
                     onContextMenu={(event) => clickRight(x, y, event)}
                     style={{
                       backgroundPosition:
-                        bombMap[y][x] === 1
-                          ? `${-30 * (bombMap[y][x] + 9) + 2}px 2px`
+                        userInput[y][x] === 2 || userInput[y][x] === 3
+                          ? `${-30 * (userInput[y][x] + 6) - 1}px -2px`
                           : number === -1
                             ? `${-30 * (userInput[y][x] - 1)}px 0px`
-                            : number === 9 || number === 10
-                              ? `${-30 * (board[y][x] - 1) - 2}px -3px`
-                              : `${-30 * (board[y][x] - 1) + 2}px 0px`,
+                            : `${-30 * (board[y][x] - 1) + 2}px 0px`,
                     }}
                     className={
                       number === -1
