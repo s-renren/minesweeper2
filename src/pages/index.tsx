@@ -116,7 +116,6 @@ const Home = () => {
           ? (newUserInput[y][x] = 3)
           : (newUserInput[y][x] = 0);
     }
-    console.log(newUserInput[y][x]);
     setUserInput(newUserInput);
   };
 
@@ -148,11 +147,13 @@ const Home = () => {
                     onContextMenu={(event) => clickRight(x, y, event)}
                     style={{
                       backgroundPosition:
-                        number === -1
-                          ? `${-30 * (userInput[y][x] - 1)}px 0px`
-                          : number === 9 || number === 10
-                            ? `${-30 * (board[y][x] - 1) - 2}px -3px`
-                            : `${-30 * (board[y][x] - 1) + 2}px 0px`,
+                        bombMap[y][x] === 1
+                          ? `${-30 * (bombMap[y][x] + 9) + 2}px 2px`
+                          : number === -1
+                            ? `${-30 * (userInput[y][x] - 1)}px 0px`
+                            : number === 9 || number === 10
+                              ? `${-30 * (board[y][x] - 1) - 2}px -3px`
+                              : `${-30 * (board[y][x] - 1) + 2}px 0px`,
                     }}
                     className={
                       number === -1
