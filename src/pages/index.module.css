@@ -75,8 +75,8 @@
 .boardarea {
   display: flex;
   flex-wrap: wrap;
-  width: 324px;
-  height: 324px;
+  width: 325px;
+  height: 325px;
   background-color: #aaa;
   border: inset 5px #e8e6e3;
 }
@@ -107,6 +107,6 @@
   width: 35px;
   height: 35px;
   background: url('~/src/assets/img/minesweepericon.png') no-repeat;
-  border-top: solid 3px #7a7a7a;
-  border-left: solid 3px #7a7a7a;
+  border-top: solid 3px #898989;
+  border-left: solid 3px #898989;
 }

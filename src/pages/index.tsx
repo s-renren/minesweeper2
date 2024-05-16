@@ -119,9 +119,7 @@ const Home = () => {
             row.forEach((n, y) => {
               if (newBombMap[y][x] === 1) {
                 board[y][x] = 11;
-                console.log('s');
                 newUserInput[y][x] = 1;
-                console.log(board[y][x]);
               }
             }),
           );
@@ -196,7 +194,7 @@ const Home = () => {
                           ? `${-30 * (userInput[y][x] + 6) - 1}px -2px`
                           : number === -1
                             ? `${-30 * (userInput[y][x] - 1)}px 0px`
-                            : `${-30 * (board[y][x] - 1) + 2}px 2px`,
+                            : `${-30 * (board[y][x] - 1) +1}px 0px`,
                     }}
                     className={
                       number === -1
