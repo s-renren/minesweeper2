@@ -38,6 +38,18 @@ const Home = () => {
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
   ];
 
+  const reset: number[][] = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  ];
+
   const isStart = !bombMap.flat().includes(1);
   let isEnd = false;
 
@@ -117,7 +129,6 @@ const Home = () => {
         setUserInput(newUserInput);
       }
     }
-    console.log(board);
   };
 
   const clickRight = (x: number, y: number, event: React.MouseEvent) => {
@@ -152,14 +163,23 @@ const Home = () => {
     });
   });
 
+  const clickSmile = () => {
+    setUserInput(reset);
+    setBombMap(reset);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.bace}>
-        <div className={styles.fancarea} >
+        <div className={styles.fancarea}>
           <div className={styles.numberStyles} />
-          <div className={styles.smile}
-            style={{backgroundPosition: isEnd ?  (`${-30 * ( 13) + 1}px 0px`)
-          :  `${-30 * (11) +1}px 0px`}} />
+          <div
+            className={styles.smile}
+            onClick={() => clickSmile()}
+            style={{
+              backgroundPosition: isEnd ? `${-30 * 13}px 1px` : `${-30 * 11}px 1px`,
+            }}
+          />
           <div className={styles.numberStyles} />
         </div>
         <div className={styles.boardarea}>
