@@ -195,7 +195,7 @@ const Home = () => {
                     style={{
                       backgroundPosition:
                         userInput[y][x] === 2 || userInput[y][x] === 3
-                          ? `${-30 * (userInput[y][x] + 6) - 1}px -2px`
+                          ? `${-25 * (userInput[y][x] + 6) -5}px 0px`
                           : number === -1
                             ? `${-30 * (userInput[y][x] - 1)}px 0px`
                             : `${-30 * (board[y][x] - 1) + 1}px 0px`,
