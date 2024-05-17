@@ -100,7 +100,7 @@
   height: 35px;
   background: url('~/src/assets/img/minesweepericon.png') no-repeat;
   background-color: #ccc;
-  background-size: cover;
+  background-size: 330px;
   border: outset 5px #ddd;
 }
 
