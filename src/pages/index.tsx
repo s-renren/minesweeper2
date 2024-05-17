@@ -80,6 +80,7 @@ const Home = () => {
           )
           .flat()
           .filter(Boolean).length;
+        userInput[y][x] = 1;
 
         if (board[y][x] === 0) {
           [-1, 0, 1].forEach((dx) => {
@@ -97,7 +98,6 @@ const Home = () => {
   const clickHandler = (x: number, y: number) => {
     const newUserInput = structuredClone(userInput);
     const newBombMap = structuredClone(bombMap);
-
     if (!isEnd) {
       if (board[y][x] === -1) {
         if (isStart) {
@@ -132,14 +132,18 @@ const Home = () => {
   const clickRight = (x: number, y: number, event: React.MouseEvent) => {
     event.preventDefault();
     const newUserInput = structuredClone(userInput);
-    if (newUserInput[y][x] === 0 || newUserInput[y][x] === 2 || newUserInput[y][x] === 3) {
-      newUserInput[y][x] === 0
-        ? (newUserInput[y][x] = 2)
-        : newUserInput[y][x] === 2
-          ? (newUserInput[y][x] = 3)
-          : (newUserInput[y][x] = 0);
+    if (userInput[y][x] !== 1) {
+      if (!isEnd) {
+        if (newUserInput[y][x] === 0 || newUserInput[y][x] === 2 || newUserInput[y][x] === 3) {
+          newUserInput[y][x] === 0
+            ? (newUserInput[y][x] = 2)
+            : newUserInput[y][x] === 2
+              ? (newUserInput[y][x] = 3)
+              : (newUserInput[y][x] = 0);
+        }
+        setUserInput(newUserInput);
+      }
     }
-    setUserInput(newUserInput);
   };
 
   userInput.forEach((row, dy) => {
@@ -194,7 +198,7 @@ const Home = () => {
                           ? `${-30 * (userInput[y][x] + 6) - 1}px -2px`
                           : number === -1
                             ? `${-30 * (userInput[y][x] - 1)}px 0px`
-                            : `${-30 * (board[y][x] - 1) +1}px 0px`,
+                            : `${-30 * (board[y][x] - 1) + 1}px 0px`,
                     }}
                     className={
                       number === -1
