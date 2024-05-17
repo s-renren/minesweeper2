@@ -51,17 +51,24 @@ const Home = () => {
   ];
 
   const isStart = !bombMap.flat().includes(1);
-  let isEnd = false;
+  const isEnd = userInput.some((row, y) =>
+    row.some((input, x) => input === 1 && bombMap[y][x] === 1),
+  );
+  const isClear = bombMap.every((row, y) =>
+    row.every((num, x) => num === 1 || userInput[y][x] === 1),
+  );
 
-  userInput.forEach((row, y) => {
-    row.forEach((n, x) => {
-      if (n === 1) {
-        if (bombMap[y][x] === 1) {
-          isEnd = true;
+  const flagGet = () => {
+    const newUserInput = structuredClone(userInput);
+    bombMap.forEach((row, y) => {
+      row.forEach((n, x) => {
+        if (n === 1) {
+          newUserInput[y][x] = 3;
         }
-      }
+      });
     });
-  });
+    setUserInput(newUserInput);
+  };
 
   const aroundBombNum = (
     board: number[][],
@@ -98,10 +105,13 @@ const Home = () => {
   const clickHandler = (x: number, y: number) => {
     const newUserInput = structuredClone(userInput);
     const newBombMap = structuredClone(bombMap);
-    if (!isEnd) {
+    if (isEnd || isClear) {
+      return;
+    }
+    {
       if (board[y][x] === -1) {
         if (isStart) {
-          while (newBombMap.flat().filter((num) => num === 1).length < 10) {
+          while (newBombMap.flat().filter((num) => num === 1).length < 1) {
             const randomX = Math.floor(Math.random() * 9);
             const randomY = Math.floor(Math.random() * 9);
             if (randomX === x && randomY === y) {
@@ -132,8 +142,11 @@ const Home = () => {
   const clickRight = (x: number, y: number, event: React.MouseEvent) => {
     event.preventDefault();
     const newUserInput = structuredClone(userInput);
-    if (userInput[y][x] !== 1) {
-      if (!isEnd) {
+    if (isEnd || isClear) {
+      return;
+    }
+    {
+      if (userInput[y][x] !== 1) {
         if (newUserInput[y][x] === 0 || newUserInput[y][x] === 2 || newUserInput[y][x] === 3) {
           newUserInput[y][x] === 0
             ? (newUserInput[y][x] = 2)
@@ -144,6 +157,7 @@ const Home = () => {
         setUserInput(newUserInput);
       }
     }
+    console.log(userInput);
   };
 
   userInput.forEach((row, dy) => {
@@ -165,21 +179,34 @@ const Home = () => {
     });
   });
 
+  // if (isClear) {
+  //   flagGet();
+  // }
+
   const clickSmile = () => {
     setUserInput(reset);
     setBombMap(reset);
   };
 
+  // if (isClear) {
+  //   bombMap.forEach((row, y) => {
+  //     row.forEach((input, x) => {
+  //       if (input === 1) {
+  //         board[y][x] = 10;
+  //       }
+  //     });
+  //   });
+  // }
+
   return (
     <div className={styles.container}>
       <div className={styles.bace}>
-        <div className={styles.fancarea}>
+        <div className={styles.fancarea} onClick={() => clickSmile()}>
           <div className={styles.numberStyles} />
           <div
             className={styles.smile}
-            onClick={() => clickSmile()}
             style={{
-              backgroundPosition: isEnd ? `${-30 * 13}px 1px` : `${-30 * 11}px 1px`,
+              backgroundPosition: isEnd ? `${-30 * 13 + 1}px 2px` : `${-30 * 11 + 1}px 2px`,
             }}
           />
           <div className={styles.numberStyles} />
@@ -202,7 +229,7 @@ const Home = () => {
                     }}
                     className={
                       number === -1
-                        ? styles.stone
+                        ? `${styles.stone} ${styles.flag}`
                         : number === 9 || number === 10
                           ? `${styles.stone} ${styles.flag}`
                           : styles.cell
