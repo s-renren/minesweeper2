@@ -99,7 +99,7 @@ const Home = () => {
     {
       if (board[y][x] === -1) {
         if (isStart) {
-          while (newBombMap.flat().filter((num) => num === 1).length < 10) {
+          while (newBombMap.flat().filter((num) => num === 1).length < 2) {
             const randomX = Math.floor(Math.random() * 9);
             const randomY = Math.floor(Math.random() * 9);
             if (randomX === x && randomY === y) {
@@ -199,10 +199,10 @@ const Home = () => {
                     onContextMenu={(event) => clickRight(x, y, event)}
                     style={{
                       backgroundPosition:
-                        userInput[y][x] === 2 || userInput[y][x] === 3
-                          ? `${-23 * (userInput[y][x] + 6) - 2}px 1px`
-                          : isClear && userInput[y][x] === 0
-                            ? `${-23 * 9 - 2}px 1px`
+                        isClear && (userInput[y][x] === 0 || userInput[y][x] === 2)
+                          ? `${-23 * 9 - 2}px 1px`
+                          : userInput[y][x] === 2 || userInput[y][x] === 3
+                            ? `${-23 * (userInput[y][x] + 6) - 2}px 1px`
                             : number === -1
                               ? `${-30 * (userInput[y][x] - 1)}px 0px`
                               : `${-30 * (board[y][x] - 1) + 1}px 0px`,
