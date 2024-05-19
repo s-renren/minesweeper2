@@ -58,18 +58,6 @@ const Home = () => {
     row.every((num, x) => num === 1 || userInput[y][x] === 1),
   );
 
-  const flagGet = () => {
-    const newUserInput = structuredClone(userInput);
-    bombMap.forEach((row, y) => {
-      row.forEach((n, x) => {
-        if (n === 1) {
-          newUserInput[y][x] = 3;
-        }
-      });
-    });
-    setUserInput(newUserInput);
-  };
-
   const aroundBombNum = (
     board: number[][],
     newBombMap: number[][],
@@ -111,7 +99,7 @@ const Home = () => {
     {
       if (board[y][x] === -1) {
         if (isStart) {
-          while (newBombMap.flat().filter((num) => num === 1).length < 1) {
+          while (newBombMap.flat().filter((num) => num === 1).length < 10) {
             const randomX = Math.floor(Math.random() * 9);
             const randomY = Math.floor(Math.random() * 9);
             if (randomX === x && randomY === y) {
@@ -179,24 +167,10 @@ const Home = () => {
     });
   });
 
-  // if (isClear) {
-  //   flagGet();
-  // }
-
   const clickSmile = () => {
     setUserInput(reset);
     setBombMap(reset);
   };
-
-  // if (isClear) {
-  //   bombMap.forEach((row, y) => {
-  //     row.forEach((input, x) => {
-  //       if (input === 1) {
-  //         board[y][x] = 10;
-  //       }
-  //     });
-  //   });
-  // }
 
   return (
     <div className={styles.container}>
@@ -206,7 +180,11 @@ const Home = () => {
           <div
             className={styles.smile}
             style={{
-              backgroundPosition: isEnd ? `${-30 * 13 + 1}px 2px` : `${-30 * 11 + 1}px 2px`,
+              backgroundPosition: isEnd
+                ? `${-30 * 13 + 1}px 2px`
+                : isClear
+                  ? `${-30 * 12 + 1}px 2px`
+                  : `${-30 * 11 + 1}px 2px`,
             }}
           />
           <div className={styles.numberStyles} />
@@ -222,10 +200,12 @@ const Home = () => {
                     style={{
                       backgroundPosition:
                         userInput[y][x] === 2 || userInput[y][x] === 3
-                          ? `${-23 * (userInput[y][x] + 6) - 1}px 1px`
-                          : number === -1
-                            ? `${-30 * (userInput[y][x] - 1)}px 0px`
-                            : `${-30 * (board[y][x] - 1) + 1}px 0px`,
+                          ? `${-23 * (userInput[y][x] + 6) - 2}px 1px`
+                          : isClear && userInput[y][x] === 0
+                            ? `${-23 * 9 - 2}px 1px`
+                            : number === -1
+                              ? `${-30 * (userInput[y][x] - 1)}px 0px`
+                              : `${-30 * (board[y][x] - 1) + 1}px 0px`,
                     }}
                     className={
                       number === -1
