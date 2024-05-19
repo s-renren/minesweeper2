@@ -99,7 +99,7 @@ const Home = () => {
     {
       if (board[y][x] === -1) {
         if (isStart) {
-          while (newBombMap.flat().filter((num) => num === 1).length < 2) {
+          while (newBombMap.flat().filter((num) => num === 1).length < 10) {
             const randomX = Math.floor(Math.random() * 9);
             const randomY = Math.floor(Math.random() * 9);
             if (randomX === x && randomY === y) {
@@ -176,7 +176,11 @@ const Home = () => {
     <div className={styles.container}>
       <div className={styles.bace}>
         <div className={styles.fancarea} onClick={() => clickSmile()}>
-          <div className={styles.numberStyles} />
+          <div className={styles.numStyles}>
+          <div className={`${styles.num} ${styles.nMinus}`} />
+            <div className={`${styles.num} ${styles.n4}`}  />
+            <div className={`${styles.num} ${styles.n4}`}  />
+          </div>
           <div
             className={styles.smile}
             style={{
@@ -187,7 +191,7 @@ const Home = () => {
                   : `${-30 * 11 + 1}px 2px`,
             }}
           />
-          <div className={styles.numberStyles} />
+          <div className={styles.numStyles} />
         </div>
         <div className={styles.boardarea}>
           <div className={styles.board}>

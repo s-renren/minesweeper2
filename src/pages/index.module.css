@@ -61,15 +61,14 @@
   border-left: solid 5px #7a7a7a;
 }
 
-.numberStyles {
+.numStyles {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 90px;
-  height: 45px;
+  height: 40px;
   margin-right: 5px;
   margin-left: 5px;
-  background-color: #aaa;
 }
 
 .boardarea {
@@ -110,4 +109,59 @@
   background: url('~/src/assets/img/minesweepericon.png') no-repeat;
   border-top: solid 3px #898989;
   border-left: solid 3px #898989;
+}
+
+.num {
+  position: relative;
+  box-sizing: border-box;
+  display: inline-block;
+  width: 30px;
+  height: 50px;
+  overflow: hidden;
+  background-color: #111;
+  border: solid 4px #111;
+}
+
+.num::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  content: '';
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.num::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 15px;
+  height: 5px;
+  content: '';
+  border-top: solid 14px #111;
+  border-bottom: solid 15px #111;
+  transform: translate(-50%, -50%);
+}
+
+.nMinus::before {
+  background-color: red;
+  box-shadow:
+    -15px -15px #560000,
+    0 -15px #560000,
+    -15px 0 #560000,
+    0 15px #560000,
+    15px 0 #560000,
+    15px 15px #560000;
+}
+
+.n4::before {
+  background-color: red;
+  box-shadow:
+    -15px -15px #560000,
+    0 -15px red,
+    -15px 0 red,
+    0 15px #560000,
+    15px 0 red,
+    15px 15px #560000;
 }
