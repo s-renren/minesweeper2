@@ -177,9 +177,9 @@ const Home = () => {
       <div className={styles.bace}>
         <div className={styles.fancarea} onClick={() => clickSmile()}>
           <div className={styles.numStyles}>
-          <div className={`${styles.num} ${styles.nMinus}`} />
-            <div className={`${styles.num} ${styles.n4}`}  />
-            <div className={`${styles.num} ${styles.n4}`}  />
+            <div className={`${styles.num} ${styles.n0}`} />
+            <div className={`${styles.num} ${styles.n0}`} />
+            <div className={`${styles.num} ${styles.n0}`} />
           </div>
           <div
             className={styles.smile}
@@ -191,7 +191,11 @@ const Home = () => {
                   : `${-30 * 11 + 1}px 2px`,
             }}
           />
-          <div className={styles.numStyles} />
+          <div className={styles.numStyles}>
+            <div className={`${styles.num} ${styles.n0}`} />
+            <div className={`${styles.num} ${styles.n0}`} />
+            <div className={`${styles.num} ${styles.n0}`} />
+          </div>
         </div>
         <div className={styles.boardarea}>
           <div className={styles.board}>
