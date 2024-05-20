@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import styles from './index.module.css';
 
+const stylesTyped: Record<string, string> = styles;
+
 const Home = () => {
   const [userInput, setUserInput] = useState([
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -59,7 +61,7 @@ const Home = () => {
   );
 
   const flagCount = userInput
-    .map((row, _) => row.map((input, _) => input === 3))
+    .map((row) => row.map((input) => input === 3))
     .flat()
     .filter(Boolean).length;
 
@@ -184,7 +186,6 @@ const Home = () => {
   const FlagNum = reFlag - flagCount;
   if (FlagNum < 10) {
     flag1 = FlagNum;
-    console.log('b');
   } else if (FlagNum >= 10 && FlagNum < 100) {
     flag10 = Math.floor(FlagNum / 10);
     flag1 = FlagNum - flag10 * 10;
@@ -205,17 +206,23 @@ const Home = () => {
           <div className={styles.numStyles}>
             <div
               className={
-                !isClear ? `${styles.num} ${styles[`n${flag100}`]}` : `${styles.num} ${styles.n0}`
+                !isClear
+                  ? `${styles.num} ${stylesTyped[`n${flag100}`]}`
+                  : `${styles.num} ${styles.n0}`
               }
             />
             <div
               className={
-                !isClear ? `${styles.num} ${styles[`n${flag10}`]}` : `${styles.num} ${styles.n0}`
+                !isClear
+                  ? `${styles.num} ${stylesTyped[`n${flag10}`]}`
+                  : `${styles.num} ${styles.n0}`
               }
             />
             <div
               className={
-                !isClear ? `${styles.num} ${styles[`n${flag1}`]}` : `${styles.num} ${styles.n0}`
+                !isClear
+                  ? `${styles.num} ${stylesTyped[`n${flag1}`]}`
+                  : `${styles.num} ${styles.n0}`
               }
             />
           </div>
