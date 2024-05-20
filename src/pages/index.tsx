@@ -58,6 +58,16 @@ const Home = () => {
     row.every((num, x) => num === 1 || userInput[y][x] === 1),
   );
 
+  const flagCount = userInput
+    .map((row, _) => row.map((input, _) => input === 3))
+    .flat()
+    .filter(Boolean).length;
+
+  const reFlag = 10;
+  let flag100 = 0;
+  let flag10 = 0;
+  let flag1 = 0;
+
   const aroundBombNum = (
     board: number[][],
     newBombMap: number[][],
@@ -172,14 +182,30 @@ const Home = () => {
     setBombMap(reset);
   };
 
+  const FlagNum = reFlag - flagCount;
+  if (FlagNum < 10) {
+    flag1 = FlagNum;
+  } else if (FlagNum >= 10 && FlagNum < 100) {
+    flag10 = Math.floor(FlagNum / 10);
+    flag1 = FlagNum - flag10 * 10;
+  } else if (FlagNum >= 100 && FlagNum < 1000) {
+    flag100 = Math.floor(FlagNum / 100);
+    flag10 = Math.floor((FlagNum - flag100 * 100) / 10);
+    flag1 = FlagNum - (flag10 * 10 + flag100 * 100);
+  } else {
+    flag100=9
+    flag10=9
+    flag1=9
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.bace}>
         <div className={styles.fancarea} onClick={() => clickSmile()}>
           <div className={styles.numStyles}>
-            <div className={`${styles.num} ${styles.n0}`} />
-            <div className={`${styles.num} ${styles.n0}`} />
-            <div className={`${styles.num} ${styles.n0}`} />
+          <div className={`${styles.num} ${styles[`n${flag100}`]}`} />
+            <div className={`${styles.num} ${styles[`n${flag10}`]}`} />
+            <div className={`${styles.num} ${styles[`n${flag1}`]}`} />
           </div>
           <div
             className={styles.smile}
