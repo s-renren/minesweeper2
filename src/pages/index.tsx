@@ -147,15 +147,14 @@ const Home = () => {
       if (userInput[y][x] !== 1) {
         if (newUserInput[y][x] === 0 || newUserInput[y][x] === 2 || newUserInput[y][x] === 3) {
           newUserInput[y][x] === 0
-            ? (newUserInput[y][x] = 2)
-            : newUserInput[y][x] === 2
-              ? (newUserInput[y][x] = 3)
+            ? (newUserInput[y][x] = 3)
+            : newUserInput[y][x] === 3
+              ? (newUserInput[y][x] = 2)
               : (newUserInput[y][x] = 0);
         }
         setUserInput(newUserInput);
       }
     }
-    console.log(userInput);
   };
 
   userInput.forEach((row, dy) => {
@@ -185,6 +184,7 @@ const Home = () => {
   const FlagNum = reFlag - flagCount;
   if (FlagNum < 10) {
     flag1 = FlagNum;
+    console.log('b');
   } else if (FlagNum >= 10 && FlagNum < 100) {
     flag10 = Math.floor(FlagNum / 10);
     flag1 = FlagNum - flag10 * 10;
@@ -193,9 +193,9 @@ const Home = () => {
     flag10 = Math.floor((FlagNum - flag100 * 100) / 10);
     flag1 = FlagNum - (flag10 * 10 + flag100 * 100);
   } else {
-    flag100=9
-    flag10=9
-    flag1=9
+    flag100 = 9;
+    flag10 = 9;
+    flag1 = 9;
   }
 
   return (
@@ -203,9 +203,21 @@ const Home = () => {
       <div className={styles.bace}>
         <div className={styles.fancarea} onClick={() => clickSmile()}>
           <div className={styles.numStyles}>
-          <div className={`${styles.num} ${styles[`n${flag100}`]}`} />
-            <div className={`${styles.num} ${styles[`n${flag10}`]}`} />
-            <div className={`${styles.num} ${styles[`n${flag1}`]}`} />
+            <div
+              className={
+                !isClear ? `${styles.num} ${styles[`n${flag100}`]}` : `${styles.num} ${styles.n0}`
+              }
+            />
+            <div
+              className={
+                !isClear ? `${styles.num} ${styles[`n${flag10}`]}` : `${styles.num} ${styles.n0}`
+              }
+            />
+            <div
+              className={
+                !isClear ? `${styles.num} ${styles[`n${flag1}`]}` : `${styles.num} ${styles.n0}`
+              }
+            />
           </div>
           <div
             className={styles.smile}
@@ -236,7 +248,7 @@ const Home = () => {
                         isClear && (userInput[y][x] === 0 || userInput[y][x] === 2)
                           ? `${-23 * 9 - 2}px 1px`
                           : userInput[y][x] === 2 || userInput[y][x] === 3
-                            ? `${-23 * (userInput[y][x] + 6) - 2}px 1px`
+                            ? `${-23 * (userInput[y][x] + 6) - 1}px 1px`
                             : number === -1
                               ? `${-30 * (userInput[y][x] - 1)}px 0px`
                               : `${-30 * (board[y][x] - 1) + 1}px 0px`,
