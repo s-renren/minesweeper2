@@ -125,18 +125,20 @@ const Home = () => {
         if (newBombMap[y][x] !== 1) {
           newUserInput[y][x] = 1;
         } else if (newBombMap[y][x] === 1) {
-          newBombMap.forEach((row, x) =>
-            row.forEach((n, y) => {
-              if (newBombMap[y][x] === 1) {
-                board[y][x] = 11;
-                newUserInput[y][x] = 1;
+          newBombMap.forEach((row, dx) =>
+            row.forEach((n, dy) => {
+              if (newBombMap[dy][dx] === 1) {
+                board[dy][dx] = 11;
+                newUserInput[dy][dx] = 1;
               }
             }),
           );
+          newUserInput[y][x] = 4;
+          console.log(newUserInput);
         }
-        setUserInput(newUserInput);
       }
     }
+    setUserInput(newUserInput);
   };
 
   const clickRight = (x: number, y: number, event: React.MouseEvent) => {
@@ -171,6 +173,8 @@ const Home = () => {
       if (bombMap[dy][dx] !== 1) {
         if (isClick === 1) {
           aroundBombNum(board, bombMap, userInput, dx, dy);
+        } else if (userInput[dy][dx] === 2 || userInput[dy][dx] === 3) {
+          board[dy][dx] = 15;
         }
       } else if (isClick === 1 && bombMap[dy][dx] === 1) {
         board[dy][dx] = 11;
@@ -256,16 +260,30 @@ const Home = () => {
                           ? `${-23 * 9 - 2}px 1px`
                           : userInput[y][x] === 2 || userInput[y][x] === 3
                             ? `${-23 * (userInput[y][x] + 6) - 1}px 1px`
-                            : number === -1
-                              ? `${-30 * (userInput[y][x] - 1)}px 0px`
-                              : `${-30 * (board[y][x] - 1) + 1}px 0px`,
+                            : userInput[y][x] === 4
+                              ? `-299px 0px`
+                              : number === -1
+                                ? `${-30 * (userInput[y][x] - 1)}px 0px`
+                                : isEnd && number === 15
+                                  ? `${-23 * (userInput[y][x] + 6) - 1}px 1px`
+                                  : number === 15
+                                    ? `${-30 * (board[y][x] - 5) + 1}px 0px`
+                                    : `${-30 * (board[y][x] - 1) + 1}px 0px`,
+                      backgroundColor:
+                        userInput[y][x] === 4 ? 'red' : isEnd && number === 15 ? 'pink' : '',
                     }}
                     className={
-                      number === -1
-                        ? `${styles.stone} ${styles.flag}`
-                        : number === 9 || number === 10
+                      userInput[y][x] === 4
+                        ? styles.cell
+                        : number === -1
                           ? `${styles.stone} ${styles.flag}`
-                          : styles.cell
+                          : number === 9 || number === 10
+                            ? `${styles.stone} ${styles.flag}`
+                            : !isEnd && number === 15
+                              ? `${styles.stone} ${styles.flag}`
+                              : isEnd && number === 15
+                                ? `${styles.stone} ${styles.flag}`
+                                : styles.cell
                     }
                   />
                 </div>
