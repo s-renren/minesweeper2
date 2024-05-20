@@ -65,10 +65,33 @@ const Home = () => {
     .flat()
     .filter(Boolean).length;
 
+  let Minus10 = false;
+  let Minus100 = false;
   const reFlag = 10;
-  let flag100 = 0;
-  let flag10 = 0;
+  let FlagNum = reFlag - flagCount;
   let flag1 = 0;
+  let flag10 = 0;
+  let flag100 = 0;
+
+  if (FlagNum >= 0) {
+    flag1 = Math.floor(FlagNum % 10);
+    flag10 = Math.floor((FlagNum / 10) % 10);
+    flag100 = Math.floor((FlagNum / 100) % 10);
+  } else {
+    FlagNum *= -1;
+    flag1 = Math.floor(FlagNum % 10);
+    flag10 = Math.floor((FlagNum / 10) % 10);
+    flag100 = Math.floor((FlagNum / 100) % 10);
+    if (FlagNum < 10) {
+      Minus10 = true;
+    } else if (FlagNum >= 10 && FlagNum < 100) {
+      Minus100 = true;
+    } else {
+      flag1 = 9;
+      flag10 = 9;
+      Minus100 = true;
+    }
+  }
 
   const aroundBombNum = (
     board: number[][],
@@ -134,7 +157,6 @@ const Home = () => {
             }),
           );
           newUserInput[y][x] = 4;
-          console.log(newUserInput);
         }
       }
     }
@@ -187,22 +209,6 @@ const Home = () => {
     setBombMap(reset);
   };
 
-  const FlagNum = reFlag - flagCount;
-  if (FlagNum < 10) {
-    flag1 = FlagNum;
-  } else if (FlagNum >= 10 && FlagNum < 100) {
-    flag10 = Math.floor(FlagNum / 10);
-    flag1 = FlagNum - flag10 * 10;
-  } else if (FlagNum >= 100 && FlagNum < 1000) {
-    flag100 = Math.floor(FlagNum / 100);
-    flag10 = Math.floor((FlagNum - flag100 * 100) / 10);
-    flag1 = FlagNum - (flag10 * 10 + flag100 * 100);
-  } else {
-    flag100 = 9;
-    flag10 = 9;
-    flag1 = 9;
-  }
-
   return (
     <div className={styles.container}>
       <div className={styles.bace}>
@@ -210,16 +216,20 @@ const Home = () => {
           <div className={styles.numStyles}>
             <div
               className={
-                !isClear
-                  ? `${styles.num} ${stylesTyped[`n${flag100}`]}`
-                  : `${styles.num} ${styles.n0}`
+                Minus100
+                  ? `${styles.num} ${styles.nMinus}`
+                  : !isClear
+                    ? `${styles.num} ${stylesTyped[`n${flag100}`]}`
+                    : `${styles.num} ${styles.n0}`
               }
             />
             <div
               className={
-                !isClear
-                  ? `${styles.num} ${stylesTyped[`n${flag10}`]}`
-                  : `${styles.num} ${styles.n0}`
+                Minus10
+                  ? `${styles.num} ${styles.nMinus}`
+                  : !isClear
+                    ? `${styles.num} ${stylesTyped[`n${flag10}`]}`
+                    : `${styles.num} ${styles.n0}`
               }
             />
             <div
