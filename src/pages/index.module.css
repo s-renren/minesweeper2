@@ -19,8 +19,8 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  width: 360px;
-  height: 450px;
+  width: 320px;
+  height: 410px;
   background-color: #ccc;
   border: outset 5px #eee;
 }
@@ -30,7 +30,7 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  width: 324px;
+  width: 280px;
   height: 60px;
   background-color: #ccc;
   border: inset 5px #e8e6e3;
@@ -74,8 +74,8 @@
 .boardarea {
   display: flex;
   flex-wrap: wrap;
-  width: 325px;
-  height: 325px;
+  width: 280px;
+  height: 280px;
   background-color: #aaa;
   border: inset 5px #e8e6e3;
 }
@@ -83,29 +83,29 @@
 .board {
   display: flex;
   flex-wrap: wrap;
-  width: 315px;
-  height: 315px;
+  width: 270px;
+  height: 270px;
 }
 
 .stone {
-  width: 35px;
-  height: 35px;
+  width: 30px;
+  height: 30px;
   background-color: #ccc;
   border: outset 5px #ddd;
 }
 
 .flag {
-  width: 35px;
-  height: 35px;
+  width: 30px;
+  height: 30px;
   background: url('~/src/assets/img/minesweepericon.png') no-repeat;
   background-color: #ccc;
-  background-size: 330px;
+  background-size: 270px;
   border: outset 5px #ddd;
 }
 
 .cell {
-  width: 35px;
-  height: 35px;
+  width: 30px;
+  height: 30px;
   background: url('~/src/assets/img/minesweepericon.png') no-repeat;
   border-top: solid 3px #898989;
   border-left: solid 3px #898989;

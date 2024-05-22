@@ -267,9 +267,9 @@ const Home = () => {
                     style={{
                       backgroundPosition:
                         isClear && (userInput[y][x] === 0 || userInput[y][x] === 2)
-                          ? `${-23 * 9 - 2}px 1px`
+                          ? `${-18 * 9 - 9}px 1px`
                           : userInput[y][x] === 2 || userInput[y][x] === 3
-                            ? `${-23 * (userInput[y][x] + 6) - 1}px 1px`
+                            ? `${-18 * (userInput[y][x] + 6) -9}px 1px`
                             : userInput[y][x] === 4
                               ? `-299px 0px`
                               : number === -1
@@ -278,7 +278,7 @@ const Home = () => {
                                   ? `${-23 * (userInput[y][x] + 6) - 1}px 1px`
                                   : number === 15
                                     ? `${-30 * (board[y][x] - 5) + 1}px 0px`
-                                    : `${-30 * (board[y][x] - 1) + 1}px 0px`,
+                                    : `${-30 * (board[y][x] - 1)}px -2px`,
                       backgroundColor:
                         userInput[y][x] === 4 ? 'red' : isEnd && number === 15 ? 'pink' : '',
                     }}
