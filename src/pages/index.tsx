@@ -101,26 +101,24 @@ const Home = () => {
     y: number,
   ) => {
     if (bombMap[y][x] !== 1) {
-      if (userInput[y][x] !== 2 && userInput[y][x] !== 3) {
-        board[y][x] = [-1, 0, 1]
-          .map((dx) =>
-            [-1, 0, 1].map(
-              (dy) => newBombMap[y + dy] !== undefined && newBombMap[y + dy][x + dx] === 1,
-            ),
-          )
-          .flat()
-          .filter(Boolean).length;
-        userInput[y][x] = 1;
+      board[y][x] = [-1, 0, 1]
+        .map((dx) =>
+          [-1, 0, 1].map(
+            (dy) => newBombMap[y + dy] !== undefined && newBombMap[y + dy][x + dx] === 1,
+          ),
+        )
+        .flat()
+        .filter(Boolean).length;
+      userInput[y][x] = 1;
 
-        if (board[y][x] === 0) {
-          [-1, 0, 1].forEach((dx) => {
-            [-1, 0, 1].forEach((dy) => {
-              if (board[y + dy] !== undefined && board[y + dy][x + dx] === -1) {
-                aroundBombNum(board, newBombMap, userInput, x + dx, y + dy);
-              }
-            });
+      if (board[y][x] === 0) {
+        [-1, 0, 1].forEach((dx) => {
+          [-1, 0, 1].forEach((dy) => {
+            if (board[y + dy] !== undefined && board[y + dy][x + dx] === -1) {
+              aroundBombNum(board, newBombMap, userInput, x + dx, y + dy);
+            }
           });
-        }
+        });
       }
     }
   };
@@ -269,7 +267,7 @@ const Home = () => {
                         isClear && (userInput[y][x] === 0 || userInput[y][x] === 2)
                           ? `${-18 * 9 - 9}px 1px`
                           : userInput[y][x] === 2 || userInput[y][x] === 3
-                            ? `${-18 * (userInput[y][x] + 6) -9}px 1px`
+                            ? `${-18 * (userInput[y][x] + 6) - 9}px 1px`
                             : userInput[y][x] === 4
                               ? `-299px 0px`
                               : number === -1
