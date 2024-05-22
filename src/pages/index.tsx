@@ -101,7 +101,7 @@ const Home = () => {
     y: number,
   ) => {
     if (bombMap[y][x] !== 1) {
-      if (userInput[y][x] !== 2 || userInput[y][x] !== 3) {
+      if (userInput[y][x] !== 2 && userInput[y][x] !== 3) {
         board[y][x] = [-1, 0, 1]
           .map((dx) =>
             [-1, 0, 1].map(
@@ -150,7 +150,7 @@ const Home = () => {
         } else if (newBombMap[y][x] === 1) {
           newBombMap.forEach((row, dx) =>
             row.forEach((n, dy) => {
-              if (newBombMap[dy][dx] === 1) {
+              if (newBombMap[dy][dx] === 1 && newUserInput[dy][dx] !== 3) {
                 board[dy][dx] = 11;
                 newUserInput[dy][dx] = 1;
               }
