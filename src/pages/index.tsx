@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './index.module.css';
 
 const stylesTyped: Record<string, string> = styles;
@@ -52,6 +52,8 @@ const Home = () => {
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
   ];
 
+  const [count, setCount] = useState(0);
+
   const isStart = !bombMap.flat().includes(1);
   const isEnd = userInput.some((row, y) =>
     row.some((input, x) => (input === 1 || input === 4) && bombMap[y][x] === 1),
@@ -92,6 +94,26 @@ const Home = () => {
       Minus100 = true;
     }
   }
+
+  useEffect(() => {
+    if (isStart) {
+      return;
+    } else if (isEnd) {
+      return;
+    } else if (isClear) {
+      return;
+    }
+    const timerId = setInterval(() => {
+      setCount((c) => c + 1);
+    }, 1000);
+    return () => {
+      clearInterval(timerId);
+    };
+  }, [isStart, isEnd, isClear]);
+
+  const time1 = Math.floor(count % 10);
+  const time10 = Math.floor((count / 10) % 10);
+  const time100 = Math.floor((count / 100) % 10);
 
   const aroundBombNum = (
     board: number[][],
@@ -159,7 +181,6 @@ const Home = () => {
       }
     }
     setUserInput(newUserInput);
-    console.log()
   };
 
   const clickRight = (x: number, y: number, event: React.MouseEvent) => {
@@ -206,6 +227,7 @@ const Home = () => {
   const clickSmile = () => {
     setUserInput(reset);
     setBombMap(reset);
+    setCount(0);
   };
 
   return (
@@ -250,9 +272,9 @@ const Home = () => {
             }}
           />
           <div className={styles.numStyles}>
-            <div className={`${styles.num} ${styles.n0}`} />
-            <div className={`${styles.num} ${styles.n0}`} />
-            <div className={`${styles.num} ${styles.n0}`} />
+            <div className={`${styles.num} ${stylesTyped[`n${time100}`]}`} />
+            <div className={`${styles.num} ${stylesTyped[`n${time10}`]}`} />
+            <div className={`${styles.num} ${stylesTyped[`n${time1}`]}`} />
           </div>
         </div>
         <div className={styles.boardarea}>
