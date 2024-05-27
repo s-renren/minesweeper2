@@ -299,7 +299,7 @@ const Home = () => {
                                   ? `${-23 * (userInput[y][x] + 6) - 1}px 1px`
                                   : number === 15
                                     ? `${-30 * (board[y][x] - 5) + 1}px 0px`
-                                    : `${-30 * (board[y][x] - 1)}px -2px`,
+                                    : `${-30 * (board[y][x] - 1) - 1}px -2px`,
                       backgroundColor:
                         userInput[y][x] === 4 ? 'red' : isEnd && number === 15 ? 'pink' : '',
                     }}
