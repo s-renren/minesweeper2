@@ -54,7 +54,7 @@ const Home = () => {
 
   const isStart = !bombMap.flat().includes(1);
   const isEnd = userInput.some((row, y) =>
-    row.some((input, x) => input === 1 && bombMap[y][x] === 1),
+    row.some((input, x) => (input === 1 || input === 4) && bombMap[y][x] === 1),
   );
   const isClear = bombMap.every((row, y) =>
     row.every((num, x) => num === 1 || userInput[y][x] === 1),
@@ -159,6 +159,7 @@ const Home = () => {
       }
     }
     setUserInput(newUserInput);
+    console.log()
   };
 
   const clickRight = (x: number, y: number, event: React.MouseEvent) => {
