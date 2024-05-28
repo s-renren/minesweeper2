@@ -234,18 +234,30 @@ const Home = () => {
 
   const clickLevel1 = () => {
     setLevel(1);
+    setUserInput(reset);
+    setBombMap(reset);
+    setCount(0);
   };
 
   const clickLevel2 = () => {
     setLevel(2);
+    setUserInput(reset);
+    setBombMap(reset);
+    setCount(0);
   };
 
   const clickLevel3 = () => {
     setLevel(3);
+    setUserInput(reset);
+    setBombMap(reset);
+    setCount(0);
   };
 
   const clickLevel4 = () => {
     setLevel(4);
+    setUserInput(reset);
+    setBombMap(reset);
+    setCount(0);
   };
 
   return (
@@ -288,8 +300,21 @@ const Home = () => {
           カスタム
         </div>
       </div>
-      <div className={styles.bace}>
-        <div className={styles.fancarea} onClick={() => clickSmile()}>
+      {/* <input type="number" /> */}
+      <div
+        className={styles.bace}
+        style={{
+          width: level === 1 ? `320px` : level === 2 ? `506px` : level === 3 ? `971px` : '',
+          height: level === 1 ? `410px` : level === 2 || level === 3 ? `596px` : '',
+        }}
+      >
+        <div
+          className={styles.fancarea}
+          onClick={() => clickSmile()}
+          style={{
+            width: level === 1 ? `280px` : level === 2 ? `466px` : level === 3 ? `931px` : '',
+          }}
+        >
           <div className={styles.numStyles}>
             <div
               className={
@@ -333,8 +358,18 @@ const Home = () => {
             <div className={`${styles.num} ${stylesTyped[`n${time1}`]}`} />
           </div>
         </div>
-        <div className={styles.boardarea}>
-          <div className={styles.board}>
+        <div
+          className={styles.boardarea}
+          style={{
+            width: level === 1 ? `280px` : level === 2 ? `446px` : level === 3 ? `931px` : '',
+            height: level === 1 ? `280px` : level === 2 || level === 3 ? `446px` : '',
+          }}
+        >
+          <div className={styles.board}
+          style={{
+            width: level === 1 ? `270px` : level === 2 ? `450px` : level === 3 ? `900px` : '',
+            height: level === 1 ? `270px` : level === 2 || level === 3 ? `450px` : '',
+          }}>
             {board.map((row, y) =>
               row.map((number, x) => (
                 <div key={`${x}-${y}`}>
