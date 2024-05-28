@@ -52,6 +52,8 @@ const Home = () => {
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
   ];
 
+  const [level, setLevel] = useState(1);
+
   const [count, setCount] = useState(0);
 
   const isStart = !bombMap.flat().includes(1);
@@ -230,8 +232,62 @@ const Home = () => {
     setCount(0);
   };
 
+  const clickLevel1 = () => {
+    setLevel(1);
+  };
+
+  const clickLevel2 = () => {
+    setLevel(2);
+  };
+
+  const clickLevel3 = () => {
+    setLevel(3);
+  };
+
+  const clickLevel4 = () => {
+    setLevel(4);
+  };
+
   return (
     <div className={styles.container}>
+      <div className={styles.level}>
+        <div
+          className={styles.level1}
+          onClick={clickLevel1}
+          style={{
+            color: level !== 1 ? 'blue' : 'black',
+          }}
+        >
+          初級
+        </div>
+        <div
+          className={styles.level2}
+          onClick={clickLevel2}
+          style={{
+            color: level !== 2 ? 'blue' : 'black',
+          }}
+        >
+          中級
+        </div>
+        <div
+          className={styles.level3}
+          onClick={clickLevel3}
+          style={{
+            color: level !== 3 ? 'blue' : 'black',
+          }}
+        >
+          上級
+        </div>
+        <div
+          className={styles.level4}
+          onClick={clickLevel4}
+          style={{
+            color: level !== 4 ? 'blue' : 'black',
+          }}
+        >
+          カスタム
+        </div>
+      </div>
       <div className={styles.bace}>
         <div className={styles.fancarea} onClick={() => clickSmile()}>
           <div className={styles.numStyles}>

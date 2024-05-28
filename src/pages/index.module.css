@@ -122,6 +122,50 @@
   border: solid 4px #111;
 }
 
+.level {
+  display: flex;
+}
+
+.level1 {
+  padding: 8px;
+  padding-bottom: 10px;
+  cursor: pointer;
+}
+
+.level1:hover {
+  text-decoration: underline;
+}
+
+.level2 {
+  padding: 8px;
+  padding-bottom: 10px;
+  cursor: pointer;
+}
+
+.level2:hover {
+  text-decoration: underline;
+}
+
+.level3 {
+  padding: 8px;
+  padding-bottom: 10px;
+  cursor: pointer;
+}
+
+.level3:hover {
+  text-decoration: underline;
+}
+
+.level4 {
+  padding: 8px;
+  padding-bottom: 10px;
+  cursor: pointer;
+}
+
+.level4:hover {
+  text-decoration: underline;
+}
+
 .num::before {
   position: absolute;
   top: 50%;
