@@ -83,8 +83,6 @@
 .board {
   display: flex;
   flex-wrap: wrap;
-  width: 270px;
-  height: 270px;
 }
 
 .stone {
@@ -166,9 +164,8 @@
   text-decoration: underline;
 }
 
-.custom {
-
-}
+/* .custom {
+} */
 
 .num::before {
   position: absolute;

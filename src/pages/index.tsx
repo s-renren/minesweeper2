@@ -4,58 +4,34 @@ import styles from './index.module.css';
 const stylesTyped: Record<string, string> = styles;
 
 const Home = () => {
-  const [userInput, setUserInput] = useState([
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  ]);
-
-  const [bombMap, setBombMap] = useState([
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  ]);
-
-  const board: number[][] = [
-    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
-    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
-    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
-    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
-    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
-    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
-    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
-    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
-    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
-  ];
-
-  const reset: number[][] = [
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  ];
-
   const [level, setLevel] = useState(1);
-
+  const getLevelH = () => {
+    if (level === 1) {
+      return 9;
+    } else if (level === 2 || level === 3) {
+      return 16;
+    } else {
+      return 16;
+    }
+  };
+  const getLevelW = () => {
+    if (level === 1) {
+      return 9;
+    } else if (level === 2) {
+      return 16;
+    } else if (level === 3) {
+      return 30;
+    } else {
+      return 16;
+    }
+  };
+  const levelH = getLevelH();
+  const levelW = getLevelW();
+  const [userInput, setUserInput] = useState([...Array(9)].map(() => [...Array(9)].map(() => 0)));
+  const [bombMap, setBombMap] = useState([...Array(9)].map(() => [...Array(9)].map(() => 0)));
   const [count, setCount] = useState(0);
-
+  const board: number[][] = [...Array(levelW)].map(() => [...Array(levelH)].map(() => -1));
+  const reset: number[][] = [...Array(levelW)].map(() => [...Array(levelH)].map(() => 0));
   const isStart = !bombMap.flat().includes(1);
   const isEnd = userInput.some((row, y) =>
     row.some((input, x) => (input === 1 || input === 4) && bombMap[y][x] === 1),
@@ -63,15 +39,28 @@ const Home = () => {
   const isClear = bombMap.every((row, y) =>
     row.every((num, x) => num === 1 || userInput[y][x] === 1),
   );
-
   const flagCount = userInput
     .map((row) => row.map((input) => input === 3))
     .flat()
     .filter(Boolean).length;
+  const level1B = [...Array(9)].map(() => [...Array(9)].map(() => 0));
+  const level2B = [...Array(16)].map(() => [...Array(16)].map(() => 0));
+  const level3B = [...Array(30)].map(() => [...Array(16)].map(() => 0));
 
   let Minus10 = false;
   let Minus100 = false;
-  const reFlag = 10;
+  const getFlag = () => {
+    if (level === 1) {
+      return 10;
+    } else if (level === 2) {
+      return 40;
+    } else if (level === 3) {
+      return 99;
+    } else {
+      return 100;
+    }
+  };
+  const reFlag = getFlag();
   let FlagNum = reFlag - flagCount;
   let flag1 = 0;
   let flag10 = 0;
@@ -156,9 +145,9 @@ const Home = () => {
     {
       if (board[y][x] === -1) {
         if (isStart) {
-          while (newBombMap.flat().filter((num) => num === 1).length < 10) {
-            const randomX = Math.floor(Math.random() * 9);
-            const randomY = Math.floor(Math.random() * 9);
+          while (newBombMap.flat().filter((num) => num === 1).length < reFlag) {
+            const randomX = Math.floor(Math.random() * levelW);
+            const randomY = Math.floor(Math.random() * levelH);
             if (randomX === x && randomY === y) {
               continue;
             } else {
@@ -234,22 +223,22 @@ const Home = () => {
 
   const clickLevel1 = () => {
     setLevel(1);
-    setUserInput(reset);
-    setBombMap(reset);
+    setUserInput(level1B);
+    setBombMap(level1B);
     setCount(0);
   };
 
   const clickLevel2 = () => {
     setLevel(2);
-    setUserInput(reset);
-    setBombMap(reset);
+    setUserInput(level2B);
+    setBombMap(level2B);
     setCount(0);
   };
 
   const clickLevel3 = () => {
     setLevel(3);
-    setUserInput(reset);
-    setBombMap(reset);
+    setUserInput(level3B);
+    setBombMap(level3B);
     setCount(0);
   };
 
@@ -304,15 +293,15 @@ const Home = () => {
       <div
         className={styles.bace}
         style={{
-          width: level === 1 ? `320px` : level === 2 ? `506px` : level === 3 ? `971px` : '',
-          height: level === 1 ? `410px` : level === 2 || level === 3 ? `596px` : '',
+          width: level === 1 ? `320px` : level === 2 ? `537px` : level === 3 ? `971px` : '',
+          height: level === 1 ? `410px` : level === 2 || level === 3 ? `627px` : '',
         }}
       >
         <div
           className={styles.fancarea}
           onClick={() => clickSmile()}
           style={{
-            width: level === 1 ? `280px` : level === 2 ? `466px` : level === 3 ? `931px` : '',
+            width: level === 1 ? `280px` : level === 2 ? `497px` : level === 3 ? `931px` : '',
           }}
         >
           <div className={styles.numStyles}>
@@ -361,15 +350,17 @@ const Home = () => {
         <div
           className={styles.boardarea}
           style={{
-            width: level === 1 ? `280px` : level === 2 ? `446px` : level === 3 ? `931px` : '',
-            height: level === 1 ? `280px` : level === 2 || level === 3 ? `446px` : '',
+            width: level === 1 ? `280px` : level === 2 ? `490px` : level === 3 ? `910px` : '',
+            height: level === 1 ? `280px` : level === 2 || level === 3 ? `490px` : '',
           }}
         >
-          <div className={styles.board}
-          style={{
-            width: level === 1 ? `270px` : level === 2 ? `450px` : level === 3 ? `900px` : '',
-            height: level === 1 ? `270px` : level === 2 || level === 3 ? `450px` : '',
-          }}>
+          <div
+            className={styles.board}
+            style={{
+              width: level === 1 ? `270px` : level === 2 ? `480px` : level === 3 ? `900px` : '',
+              height: level === 1 ? `270px` : level === 2 || level === 3 ? `480px` : '',
+            }}
+          >
             {board.map((row, y) =>
               row.map((number, x) => (
                 <div key={`${x}-${y}`}>
