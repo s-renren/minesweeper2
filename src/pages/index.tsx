@@ -22,7 +22,7 @@ const Home = () => {
     } else if (level === 3) {
       return 30;
     } else {
-      return 16;
+      return 30;
     }
   };
   const levelH = getLevelH();
@@ -30,8 +30,8 @@ const Home = () => {
   const [userInput, setUserInput] = useState([...Array(9)].map(() => [...Array(9)].map(() => 0)));
   const [bombMap, setBombMap] = useState([...Array(9)].map(() => [...Array(9)].map(() => 0)));
   const [count, setCount] = useState(0);
-  const board: number[][] = [...Array(levelW)].map(() => [...Array(levelH)].map(() => -1));
-  const reset: number[][] = [...Array(levelW)].map(() => [...Array(levelH)].map(() => 0));
+  const board: number[][] = [...Array(levelH)].map(() => [...Array(levelW)].map(() => -1));
+  const reset: number[][] = [...Array(levelH)].map(() => [...Array(levelW)].map(() => 0));
   const isStart = !bombMap.flat().includes(1);
   const isEnd = userInput.some((row, y) =>
     row.some((input, x) => (input === 1 || input === 4) && bombMap[y][x] === 1),
@@ -45,7 +45,7 @@ const Home = () => {
     .filter(Boolean).length;
   const level1B = [...Array(9)].map(() => [...Array(9)].map(() => 0));
   const level2B = [...Array(16)].map(() => [...Array(16)].map(() => 0));
-  const level3B = [...Array(30)].map(() => [...Array(16)].map(() => 0));
+  const level3B = [...Array(16)].map(() => [...Array(30)].map(() => 0));
 
   let Minus10 = false;
   let Minus100 = false;
@@ -159,8 +159,8 @@ const Home = () => {
         if (newBombMap[y][x] !== 1) {
           newUserInput[y][x] = 1;
         } else if (newBombMap[y][x] === 1) {
-          newBombMap.forEach((row, dx) =>
-            row.forEach((n, dy) => {
+          newBombMap.forEach((row, dy) =>
+            row.forEach((n, dx) => {
               if (newBombMap[dy][dx] === 1 && newUserInput[dy][dx] !== 3) {
                 board[dy][dx] = 11;
                 newUserInput[dy][dx] = 1;
@@ -240,6 +240,7 @@ const Home = () => {
     setUserInput(level3B);
     setBombMap(level3B);
     setCount(0);
+    console.log(userInput);
   };
 
   const clickLevel4 = () => {
@@ -294,7 +295,7 @@ const Home = () => {
         className={styles.bace}
         style={{
           width: level === 1 ? `320px` : level === 2 ? `537px` : level === 3 ? `971px` : '',
-          height: level === 1 ? `410px` : level === 2 || level === 3 ? `627px` : '',
+          height: level === 1 ? `410px` : level === 2 || level === 3 ? `700px` : '',
         }}
       >
         <div
@@ -351,14 +352,14 @@ const Home = () => {
           className={styles.boardarea}
           style={{
             width: level === 1 ? `280px` : level === 2 ? `490px` : level === 3 ? `910px` : '',
-            height: level === 1 ? `280px` : level === 2 || level === 3 ? `490px` : '',
+            height: level === 1 ? `280px` : level === 2 || level === 3 ? `500px` : '',
           }}
         >
           <div
             className={styles.board}
             style={{
               width: level === 1 ? `270px` : level === 2 ? `480px` : level === 3 ? `900px` : '',
-              height: level === 1 ? `270px` : level === 2 || level === 3 ? `480px` : '',
+              height: level === 1 ? `270px` : level === 2 || level === 3 ? `490px` : '',
             }}
           >
             {board.map((row, y) =>
