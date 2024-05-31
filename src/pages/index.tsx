@@ -257,6 +257,7 @@ const Home = () => {
 
   const clickCustom = () => {
     setLevel(4);
+    setCount(0);
     setCustomWidth(tempWidth);
     setCustomHeight(tempHeight);
     setCustomBombs(tempBombs);
