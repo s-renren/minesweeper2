@@ -240,7 +240,6 @@ const Home = () => {
     setUserInput(level3B);
     setBombMap(level3B);
     setCount(0);
-    console.log(userInput);
   };
 
   const clickLevel4 = () => {
@@ -294,15 +293,15 @@ const Home = () => {
       <div
         className={styles.bace}
         style={{
-          width: level === 1 ? `320px` : level === 2 ? `537px` : level === 3 ? `971px` : '',
-          height: level === 1 ? `410px` : level === 2 || level === 3 ? `700px` : '',
+          width: level !== 4 ? `${30 * levelW + 50}px` : '',
+          height: level !== 4 ? `${30 * levelH + 140}px` : '',
         }}
       >
         <div
           className={styles.fancarea}
           onClick={() => clickSmile()}
           style={{
-            width: level === 1 ? `280px` : level === 2 ? `497px` : level === 3 ? `931px` : '',
+            width: level !== 4 ? `${30 * levelW + levelW + 1}px` : '',
           }}
         >
           <div className={styles.numStyles}>
@@ -351,15 +350,15 @@ const Home = () => {
         <div
           className={styles.boardarea}
           style={{
-            width: level === 1 ? `280px` : level === 2 ? `490px` : level === 3 ? `910px` : '',
-            height: level === 1 ? `280px` : level === 2 || level === 3 ? `500px` : '',
+            width: level !== 4 ? `${30 * levelW + 10}px` : '',
+            height: level !== 4 ? `${30 * levelH + 10}px` : '',
           }}
         >
           <div
             className={styles.board}
             style={{
-              width: level === 1 ? `270px` : level === 2 ? `480px` : level === 3 ? `900px` : '',
-              height: level === 1 ? `270px` : level === 2 || level === 3 ? `490px` : '',
+              width: level !== 4 ? `${30 * levelW}px` : '',
+              height: level !== 4 ? `${30 * levelH}px` : '',
             }}
           >
             {board.map((row, y) =>
