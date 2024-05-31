@@ -332,7 +332,12 @@ const Home = () => {
       <div
         className={styles.bace}
         style={{
-          width: level !== 4 ? `${30 * levelW + 50}px` : `${30 * customWidth + 50}px`,
+          width:
+            level !== 4
+              ? `${30 * levelW + 50}px`
+              : customWidth < 8
+                ? `300px`
+                : `${30 * customWidth + 50}px`,
           height: level !== 4 ? `${30 * levelH + 140}px` : `${30 * customHeight + 140}px`,
         }}
       >
@@ -343,7 +348,9 @@ const Home = () => {
             width:
               level !== 4
                 ? `${30 * levelW + levelW + 1}px`
-                : `${30 * customWidth + customWidth + 1}px`,
+                : customWidth < 8
+                  ? `250px`
+                  : `${30 * customWidth + customWidth + 1}px`,
           }}
         >
           <div className={styles.numStyles}>
