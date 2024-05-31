@@ -21,6 +21,21 @@ const Home = () => {
   const isClear = bombMap.every((row, y) =>
     row.every((num, x) => num === 1 || userInput[y][x] === 1),
   );
+  useEffect(() => {
+    if (isStart) {
+      return;
+    } else if (isEnd) {
+      return;
+    } else if (isClear) {
+      return;
+    }
+    const timerId = setInterval(() => {
+      setCount((c) => c + 1);
+    }, 1000);
+    return () => {
+      clearInterval(timerId);
+    };
+  }, [isStart, isEnd, isClear]);
   const flagCount = userInput
     .map((row) => row.map((input) => input === 3))
     .flat()
@@ -91,22 +106,6 @@ const Home = () => {
       Minus100 = true;
     }
   }
-
-  useEffect(() => {
-    if (isStart) {
-      return;
-    } else if (isEnd) {
-      return;
-    } else if (isClear) {
-      return;
-    }
-    const timerId = setInterval(() => {
-      setCount((c) => c + 1);
-    }, 1000);
-    return () => {
-      clearInterval(timerId);
-    };
-  }, [isStart, isEnd, isClear]);
 
   const time1 = Math.floor(count % 10);
   const time10 = Math.floor((count / 10) % 10);
