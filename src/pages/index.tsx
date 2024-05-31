@@ -5,33 +5,15 @@ const stylesTyped: Record<string, string> = styles;
 
 const Home = () => {
   const [level, setLevel] = useState(1);
-  const getLevelH = () => {
-    if (level === 1) {
-      return 9;
-    } else if (level === 2 || level === 3) {
-      return 16;
-    } else {
-      return 16;
-    }
-  };
-  const getLevelW = () => {
-    if (level === 1) {
-      return 9;
-    } else if (level === 2) {
-      return 16;
-    } else if (level === 3) {
-      return 30;
-    } else {
-      return 30;
-    }
-  };
-  const levelH = getLevelH();
-  const levelW = getLevelW();
   const [userInput, setUserInput] = useState([...Array(9)].map(() => [...Array(9)].map(() => 0)));
   const [bombMap, setBombMap] = useState([...Array(9)].map(() => [...Array(9)].map(() => 0)));
   const [count, setCount] = useState(0);
-  const board: number[][] = [...Array(levelH)].map(() => [...Array(levelW)].map(() => -1));
-  const reset: number[][] = [...Array(levelH)].map(() => [...Array(levelW)].map(() => 0));
+  const [customWidth, setCustomWidth] = useState<number>(9);
+  const [customHeight, setCustomHeight] = useState<number>(9);
+  const [custombombs, setCustomBombs] = useState<number>(10);
+  const [tempWidth, setTempWidth] = useState<number>(9);
+  const [tempHeight, setTempHeight] = useState<number>(9);
+  const [tempBombs, setTempBombs] = useState<number>(10);
   const isStart = !bombMap.flat().includes(1);
   const isEnd = userInput.some((row, y) =>
     row.some((input, x) => (input === 1 || input === 4) && bombMap[y][x] === 1),
@@ -43,9 +25,33 @@ const Home = () => {
     .map((row) => row.map((input) => input === 3))
     .flat()
     .filter(Boolean).length;
+  const getLevelH = () => {
+    if (level === 1) {
+      return 9;
+    } else if (level === 2 || level === 3) {
+      return 16;
+    } else {
+      return customHeight;
+    }
+  };
+  const getLevelW = () => {
+    if (level === 1) {
+      return 9;
+    } else if (level === 2) {
+      return 16;
+    } else if (level === 3) {
+      return 30;
+    } else {
+      return customWidth;
+    }
+  };
+  const levelH = getLevelH();
+  const levelW = getLevelW();
   const level1B = [...Array(9)].map(() => [...Array(9)].map(() => 0));
   const level2B = [...Array(16)].map(() => [...Array(16)].map(() => 0));
   const level3B = [...Array(16)].map(() => [...Array(30)].map(() => 0));
+  const board: number[][] = [...Array(levelH)].map(() => [...Array(levelW)].map(() => -1));
+  const reset: number[][] = [...Array(levelH)].map(() => [...Array(levelW)].map(() => 0));
 
   let Minus10 = false;
   let Minus100 = false;
@@ -57,7 +63,7 @@ const Home = () => {
     } else if (level === 3) {
       return 99;
     } else {
-      return 100;
+      return custombombs;
     }
   };
   const reFlag = getFlag();
@@ -249,6 +255,29 @@ const Home = () => {
     setCount(0);
   };
 
+  const clickCustom = () => {
+    setLevel(4);
+    setCustomWidth(tempWidth);
+    setCustomHeight(tempHeight);
+    setCustomBombs(tempBombs);
+    const customReset: number[][] = [...Array(tempHeight)].map(() =>
+      [...Array(tempWidth)].map(() => 0),
+    );
+    setUserInput(customReset);
+    setBombMap(customReset);
+  };
+
+  const handleTempWidthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTempWidth(parseInt(event.target.value, 10));
+  };
+
+  const handleTempHeightChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTempHeight(parseInt(event.target.value, 10));
+  };
+
+  const handleTempBombsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTempBombs(parseInt(event.target.value, 10));
+  };
   return (
     <div className={styles.container}>
       <div className={styles.level}>
@@ -289,19 +318,32 @@ const Home = () => {
           カスタム
         </div>
       </div>
-      {/* <input type="number" /> */}
+      <div className={level === 4 ? styles.custom : styles.none}>
+        <label htmlFor="width">幅:</label>
+        <input type="number" id="width" value={tempWidth} onChange={handleTempWidthChange} />
+        <label htmlFor="height">高さ:</label>
+        <input type="number" id="height" value={tempHeight} onChange={handleTempHeightChange} />
+        <label htmlFor="bombs">爆弾数:</label>
+        <input type="number" id="bombs" value={tempBombs} onChange={handleTempBombsChange} />
+        <button id="update" onClick={clickCustom}>
+          更新
+        </button>
+      </div>
       <div
         className={styles.bace}
         style={{
-          width: level !== 4 ? `${30 * levelW + 50}px` : '',
-          height: level !== 4 ? `${30 * levelH + 140}px` : '',
+          width: level !== 4 ? `${30 * levelW + 50}px` : `${30 * customWidth + 50}px`,
+          height: level !== 4 ? `${30 * levelH + 140}px` : `${30 * customHeight + 140}px`,
         }}
       >
         <div
           className={styles.fancarea}
           onClick={() => clickSmile()}
           style={{
-            width: level !== 4 ? `${30 * levelW + levelW + 1}px` : '',
+            width:
+              level !== 4
+                ? `${30 * levelW + levelW + 1}px`
+                : `${30 * customWidth + customWidth + 1}px`,
           }}
         >
           <div className={styles.numStyles}>
@@ -350,15 +392,15 @@ const Home = () => {
         <div
           className={styles.boardarea}
           style={{
-            width: level !== 4 ? `${30 * levelW + 10}px` : '',
-            height: level !== 4 ? `${30 * levelH + 10}px` : '',
+            width: level !== 4 ? `${30 * levelW + 10}px` : `${30 * customWidth + 10}px`,
+            height: level !== 4 ? `${30 * levelH + 10}px` : `${30 * customHeight + 10}px`,
           }}
         >
           <div
             className={styles.board}
             style={{
-              width: level !== 4 ? `${30 * levelW}px` : '',
-              height: level !== 4 ? `${30 * levelH}px` : '',
+              width: level !== 4 ? `${30 * levelW}px` : `${30 * customWidth}px`,
+              height: level !== 4 ? `${30 * levelH}px` : `${30 * customHeight}px`,
             }}
           >
             {board.map((row, y) =>
