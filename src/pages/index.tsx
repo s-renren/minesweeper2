@@ -248,13 +248,6 @@ const Home = () => {
     setCount(0);
   };
 
-  const clickLevel4 = () => {
-    setLevel(4);
-    setUserInput(reset);
-    setBombMap(reset);
-    setCount(0);
-  };
-
   const clickCustom = () => {
     setLevel(4);
     setCount(0);
@@ -311,7 +304,7 @@ const Home = () => {
         </div>
         <div
           className={styles.level4}
-          onClick={clickLevel4}
+          onClick={clickCustom}
           style={{
             color: level !== 4 ? 'blue' : 'black',
           }}
