@@ -423,7 +423,7 @@ const Home = () => {
                           : userInput[y][x] === 2 || userInput[y][x] === 3
                             ? `${-18 * (userInput[y][x] + 6) - 9}px 1px`
                             : userInput[y][x] === 4
-                              ? `-299px 0px`
+                              ? `-300px -1px`
                               : number === -1
                                 ? `${-30 * (userInput[y][x] - 1)}px 0px`
                                 : isEnd && number === 15
