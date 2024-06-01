@@ -116,7 +116,6 @@ const Home = () => {
   };
 
   useEffect(() => {
-    calcValue();
     if (isStart) {
       return;
     } else if (isEnd) {
