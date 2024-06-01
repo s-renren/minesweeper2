@@ -92,7 +92,31 @@ const Home = () => {
     }
   }
 
+  const calcValue = () => {
+    userInput.forEach((row, dy) => {
+      row.forEach((isClick, dx) => {
+        if (isClick === 2 || isClick === 3) {
+          isClick === 2
+            ? (board[dy][dx] = 9)
+            : isClick === 3
+              ? (board[dy][dx] = 10)
+              : (board[dy][dx] = -1);
+        }
+        if (bombMap[dy][dx] !== 1) {
+          if (isClick === 1) {
+            aroundBombNum(board, bombMap, userInput, dx, dy);
+          } else if (userInput[dy][dx] === 2 || userInput[dy][dx] === 3) {
+            board[dy][dx] = 15;
+          }
+        } else if (isClick === 1 && bombMap[dy][dx] === 1) {
+          board[dy][dx] = 11;
+        }
+      });
+    });
+  };
+
   useEffect(() => {
+    calcValue();
     if (isStart) {
       return;
     } else if (isEnd) {
@@ -200,26 +224,7 @@ const Home = () => {
     }
   };
 
-  userInput.forEach((row, dy) => {
-    row.forEach((isClick, dx) => {
-      if (isClick === 2 || isClick === 3) {
-        isClick === 2
-          ? (board[dy][dx] = 9)
-          : isClick === 3
-            ? (board[dy][dx] = 10)
-            : (board[dy][dx] = -1);
-      }
-      if (bombMap[dy][dx] !== 1) {
-        if (isClick === 1) {
-          aroundBombNum(board, bombMap, userInput, dx, dy);
-        } else if (userInput[dy][dx] === 2 || userInput[dy][dx] === 3) {
-          board[dy][dx] = 15;
-        }
-      } else if (isClick === 1 && bombMap[dy][dx] === 1) {
-        board[dy][dx] = 11;
-      }
-    });
-  });
+  calcValue();
 
   const clickSmile = () => {
     setUserInput(reset);
