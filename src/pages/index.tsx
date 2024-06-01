@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './index.module.css';
 
 const stylesTyped: Record<string, string> = styles;
@@ -14,6 +14,7 @@ const Home = () => {
   const [tempWidth, setTempWidth] = useState<number>(9);
   const [tempHeight, setTempHeight] = useState<number>(9);
   const [tempBombs, setTempBombs] = useState<number>(10);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const isStart = !bombMap.flat().includes(1);
   const isEnd = userInput.some((row, y) =>
     row.some((input, x) => (input === 1 || input === 4) && bombMap[y][x] === 1),
@@ -117,14 +118,21 @@ const Home = () => {
 
   useEffect(() => {
     if (isClear || isEnd) {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
       return;
     }
     if (!isStart) {
-      const interval = setInterval(() => {
+      intervalRef.current = setInterval(() => {
         setCount((count) => count + 1);
       }, 1000);
 
-      return () => clearInterval(interval);
+      return () => {
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+        }
+      };
     }
   }, [isClear, isEnd, isStart]);
 
