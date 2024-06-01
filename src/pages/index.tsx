@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './index.module.css';
 
 const stylesTyped: Record<string, string> = styles;
@@ -14,7 +14,6 @@ const Home = () => {
   const [tempWidth, setTempWidth] = useState<number>(9);
   const [tempHeight, setTempHeight] = useState<number>(9);
   const [tempBombs, setTempBombs] = useState<number>(10);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const isStart = !bombMap.flat().includes(1);
   const isEnd = userInput.some((row, y) =>
     row.some((input, x) => (input === 1 || input === 4) && bombMap[y][x] === 1),
@@ -110,29 +109,31 @@ const Home = () => {
             board[dy][dx] = 15;
           }
         } else if (isClick === 1 && bombMap[dy][dx] === 1) {
-          board[dy][dx] = 11;
+          board[dy][dx] = 12;
         }
       });
     });
+    if (isClear) {
+      bombMap.forEach((row, dy) => {
+        row.forEach((num, dx) => {
+          if (num === 1 && userInput[dy][dx] === 0) {
+            board[dy][dx] = 15;
+          }
+        });
+      });
+    }
   };
 
   useEffect(() => {
     if (isClear || isEnd) {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
       return;
     }
     if (!isStart) {
-      intervalRef.current = setInterval(() => {
+      const interval = setInterval(() => {
         setCount((count) => count + 1);
       }, 1000);
 
-      return () => {
-        if (intervalRef.current) {
-          clearInterval(intervalRef.current);
-        }
-      };
+      return () => clearInterval(interval);
     }
   }, [isClear, isEnd, isStart]);
 
@@ -229,6 +230,7 @@ const Home = () => {
   };
 
   calcValue();
+  console.log(userInput);
 
   const clickSmile = () => {
     setUserInput(reset);
