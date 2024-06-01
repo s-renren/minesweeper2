@@ -124,12 +124,12 @@ const Home = () => {
       return;
     }
     const timerId = setInterval(() => {
-      setCount((c) => c + 1);
+      setCount(() => count + 1);
     }, 1000);
     return () => {
       clearInterval(timerId);
     };
-  }, [isStart, isEnd, isClear]);
+  }, [isStart, isEnd, isClear, count]);
 
   const time1 = Math.floor(count % 10);
   const time10 = Math.floor((count / 10) % 10);
