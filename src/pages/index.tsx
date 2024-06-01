@@ -116,20 +116,17 @@ const Home = () => {
   };
 
   useEffect(() => {
-    if (isStart) {
-      return;
-    } else if (isEnd) {
-      return;
-    } else if (isClear) {
+    if (isClear || isEnd) {
       return;
     }
-    const timerId = setInterval(() => {
-      setCount(() => count + 1);
-    }, 1000);
-    return () => {
-      clearInterval(timerId);
-    };
-  }, [isStart, isEnd, isClear, count]);
+    if (!isStart) {
+      const interval = setInterval(() => {
+        setCount((count) => count + 1);
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
+  }, [isClear, isEnd, isStart]);
 
   const time1 = Math.floor(count % 10);
   const time10 = Math.floor((count / 10) % 10);
