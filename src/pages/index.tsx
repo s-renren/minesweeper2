@@ -15,11 +15,11 @@ const Home = () => {
   const [tempHeight, setTempHeight] = useState<number>(9);
   const [tempBombs, setTempBombs] = useState<number>(10);
   const isStart = !bombMap.flat().includes(1);
+  const isClearN = bombMap.every((row, y) =>
+    row.every((num, x) => num === 1 || userInput[y][x] === 1),
+  );
   const isEnd = userInput.some((row, y) =>
     row.some((input, x) => (input === 1 || input === 4) && bombMap[y][x] === 1),
-  );
-  const isClear = bombMap.every((row, y) =>
-    row.every((num, x) => num === 1 || userInput[y][x] === 1),
   );
   const flagCount = userInput
     .map((row) => row.map((input) => input === 3))
@@ -113,7 +113,7 @@ const Home = () => {
         }
       });
     });
-    if (isClear) {
+    if (isClearN) {
       bombMap.forEach((row, dy) => {
         row.forEach((num, dx) => {
           if (num === 1 && userInput[dy][dx] === 0) {
@@ -123,19 +123,6 @@ const Home = () => {
       });
     }
   };
-
-  useEffect(() => {
-    if (isClear || isEnd) {
-      return;
-    }
-    if (!isStart) {
-      const interval = setInterval(() => {
-        setCount((count) => count + 1);
-      }, 1000);
-
-      return () => clearInterval(interval);
-    }
-  }, [isClear, isEnd, isStart]);
 
   const time1 = Math.floor(count % 10);
   const time10 = Math.floor((count / 10) % 10);
@@ -174,7 +161,7 @@ const Home = () => {
   const clickHandler = (x: number, y: number) => {
     const newUserInput = structuredClone(userInput);
     const newBombMap = structuredClone(bombMap);
-    if (isEnd || isClear) {
+    if (isEnd || isClearN) {
       return;
     }
     {
@@ -212,7 +199,7 @@ const Home = () => {
   const clickRight = (x: number, y: number, event: React.MouseEvent) => {
     event.preventDefault();
     const newUserInput = structuredClone(userInput);
-    if (isEnd || isClear) {
+    if (isEnd || isClearN) {
       return;
     }
     {
@@ -228,9 +215,7 @@ const Home = () => {
       }
     }
   };
-
   calcValue();
-  console.log(userInput);
 
   const clickSmile = () => {
     setUserInput(reset);
@@ -283,6 +268,22 @@ const Home = () => {
   const handleTempBombsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTempBombs(parseInt(event.target.value, 10));
   };
+  const isClear = bombMap.every((row, y) =>
+    row.every((num, x) => num === 1 || userInput[y][x] === 1),
+  );
+  useEffect(() => {
+    if (isClear || isEnd) {
+      return;
+    }
+    if (!isStart) {
+      const interval = setInterval(() => {
+        setCount((count) => count + 1);
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
+  }, [isClear, isEnd, isStart]);
+  console.log(isClear);
   return (
     <div className={styles.container}>
       <div className={styles.level}>
