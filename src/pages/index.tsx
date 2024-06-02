@@ -167,7 +167,7 @@ const Home = () => {
     {
       if (board[y][x] === -1) {
         if (isStart) {
-          if (customHeight*customWidth === reFlag) {
+          if (customHeight * customWidth === reFlag) {
             newBombMap.forEach((s, ddy) => {
               s.forEach((n1, ddx) => {
                 newBombMap[ddy][ddx] = 1;
@@ -271,7 +271,12 @@ const Home = () => {
     );
     setUserInput(customReset);
     setBombMap(customReset);
-    setCustomBombs(tempBombs);
+    if (tempHeight * tempWidth <= tempBombs) {
+      setCustomBombs(tempHeight * tempWidth);
+      setTempBombs(tempHeight * tempWidth);
+    } else {
+      setCustomBombs(tempBombs);
+    }
   };
 
   const handleTempWidthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -293,6 +298,7 @@ const Home = () => {
   const handleTempBombsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (tempHeight * tempWidth <= parseInt(event.target.value, 10)) {
       setTempBombs(tempHeight * tempWidth);
+      console.log('a');
     } else {
       setTempBombs(parseInt(event.target.value, 10));
     }
