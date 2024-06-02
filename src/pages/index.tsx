@@ -109,7 +109,7 @@ const Home = () => {
             board[dy][dx] = 15;
           }
         } else if (isClick === 1 && bombMap[dy][dx] === 1) {
-          board[dy][dx] = 12;
+          board[dy][dx] = 11;
         }
       });
     });
@@ -167,6 +167,23 @@ const Home = () => {
     {
       if (board[y][x] === -1) {
         if (isStart) {
+          if (customHeight*customWidth === reFlag) {
+            newBombMap.forEach((s, ddy) => {
+              s.forEach((n1, ddx) => {
+                newBombMap[ddy][ddx] = 1;
+                console.log('a');
+              });
+            });
+            newBombMap.forEach((row, dy) =>
+              row.forEach((n, dx) => {
+                if (newBombMap[dy][dx] === 1 && newUserInput[dy][dx] !== 3) {
+                  board[dy][dx] = 11;
+                  newUserInput[dy][dx] = 1;
+                }
+              }),
+            );
+            newUserInput[y][x] = 4;
+          }
           while (newBombMap.flat().filter((num) => num === 1).length < reFlag) {
             const randomX = Math.floor(Math.random() * levelW);
             const randomY = Math.floor(Math.random() * levelH);
@@ -249,24 +266,36 @@ const Home = () => {
     setCount(0);
     setCustomWidth(tempWidth);
     setCustomHeight(tempHeight);
-    setCustomBombs(tempBombs);
     const customReset: number[][] = [...Array(tempHeight)].map(() =>
       [...Array(tempWidth)].map(() => 0),
     );
     setUserInput(customReset);
     setBombMap(customReset);
+    setCustomBombs(tempBombs);
   };
 
   const handleTempWidthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTempWidth(parseInt(event.target.value, 10));
+    if (parseInt(event.target.value, 10) < 0) {
+      setTempWidth(0);
+    } else {
+      setTempWidth(parseInt(event.target.value, 10));
+    }
   };
 
   const handleTempHeightChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTempHeight(parseInt(event.target.value, 10));
+    if (parseInt(event.target.value, 10) < 0) {
+      setTempHeight(0);
+    } else {
+      setTempHeight(parseInt(event.target.value, 10));
+    }
   };
 
   const handleTempBombsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTempBombs(parseInt(event.target.value, 10));
+    if (tempHeight * tempWidth <= parseInt(event.target.value, 10)) {
+      setTempBombs(tempHeight * tempWidth);
+    } else {
+      setTempBombs(parseInt(event.target.value, 10));
+    }
   };
   const isClear = bombMap.every((row, y) =>
     row.every((num, x) => num === 1 || userInput[y][x] === 1),
@@ -283,7 +312,6 @@ const Home = () => {
       return () => clearInterval(interval);
     }
   }, [isClear, isEnd, isStart]);
-  console.log(isClear);
   return (
     <div className={styles.container}>
       <div className={styles.level}>
