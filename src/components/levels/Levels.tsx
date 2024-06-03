@@ -1,4 +1,4 @@
-import styles from './level.module.css';
+import styles from './Levels.module.css';
 
 type Props = {
   level: number;
@@ -14,7 +14,7 @@ type Props = {
   handleTempBombsChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export const level = ({
+export const Levels = ({
   level,
   tempWidth,
   tempHeight,

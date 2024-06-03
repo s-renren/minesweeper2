@@ -315,7 +315,8 @@ export const useGame = () => {
       return () => clearInterval(interval);
     }
   }, [isClear, isEnd, isStart]);
-  return [
+
+  return {
     flag100,
     Minus10,
     flag1,
@@ -334,5 +335,17 @@ export const useGame = () => {
     handleTempWidthChange,
     handleTempHeightChange,
     handleTempBombsChange,
-  ];
+    isClear,
+    isEnd,
+    level,
+    levelW,
+    tempWidth,
+    tempHeight,
+    tempBombs,
+    board,
+    userInput,
+    customWidth,
+    levelH,
+    customHeight,
+  };
 };
