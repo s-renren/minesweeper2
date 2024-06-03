@@ -1,9 +1,30 @@
-import React, { useEffect, useState } from 'react';
 import styles from './index.module.css';
+// import { useGame } from '../hooks/useGames';
+import { useEffect, useState } from 'react';
 
 const stylesTyped: Record<string, string> = styles;
 
 const Home = () => {
+  // const {
+  //   flag100,
+  //   Minus10,
+  //   flag1,
+  //   flag10,
+  //   Minus100,
+  //   time1,
+  //   time10,
+  //   time100,
+  //   clickHandler,
+  //   clickRight,
+  //   clickSmile,
+  //   clickLevel1,
+  //   clickLevel2,
+  //   clickLevel3,
+  //   clickCustom,
+  //   handleTempWidthChange,
+  //   handleTempHeightChange,
+  //   handleTempBombsChange,
+  // } = useGame;
   const [level, setLevel] = useState(1);
   const [userInput, setUserInput] = useState([...Array(9)].map(() => [...Array(9)].map(() => 0)));
   const [bombMap, setBombMap] = useState([...Array(9)].map(() => [...Array(9)].map(() => 0)));
