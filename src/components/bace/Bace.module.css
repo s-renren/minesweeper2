@@ -1,0 +1,248 @@
+.bace {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  width: 320px;
+  height: 410px;
+  background-color: #ccc;
+  border: outset 5px #eee;
+}
+
+.fancarea {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  width: 280px;
+  height: 60px;
+  background-color: #ccc;
+  border: inset 5px #e8e6e3;
+}
+
+.smile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: url('~/src/assets/img/minesweepericon.png') no-repeat;
+  background-color: #ccc;
+  border: outset 5px #ddd;
+}
+
+.smile:active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: url('~/src/assets/img/minesweepericon.png') no-repeat;
+  background-color: #ccc;
+  border-top: solid 5px #7a7a7a;
+  border-right: solid 3px #7a7a7a;
+  border-bottom: solid 3px #7a7a7a;
+  border-left: solid 5px #7a7a7a;
+}
+
+.numStyles {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90px;
+  height: 40px;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.boardarea {
+  display: flex;
+  flex-wrap: wrap;
+  width: 280px;
+  height: 280px;
+  background-color: #aaa;
+  border: inset 5px #e8e6e3;
+}
+
+.board {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.stone {
+  width: 30px;
+  height: 30px;
+  background-color: #ccc;
+  border: outset 5px #ddd;
+}
+
+.flag {
+  width: 30px;
+  height: 30px;
+  background: url('~/src/assets/img/minesweepericon.png') no-repeat;
+  background-color: #ccc;
+  background-size: 270px;
+  border: outset 5px #ddd;
+}
+
+.cell {
+  width: 30px;
+  height: 30px;
+  background: url('~/src/assets/img/minesweepericon.png') no-repeat;
+  border-top: solid 3px #898989;
+  border-left: solid 3px #898989;
+}
+
+.num {
+  position: relative;
+  box-sizing: border-box;
+  display: inline-block;
+  width: 30px;
+  height: 50px;
+  overflow: hidden;
+  background-color: #111;
+  border: solid 4px #111;
+}
+
+.num::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  content: '';
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.num::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 15px;
+  height: 5px;
+  content: '';
+  border-top: solid 14px #111;
+  border-bottom: solid 14px #111;
+  transform: translate(-50%, -50%);
+}
+
+.nMinus::before {
+  background-color: red;
+  box-shadow:
+    -15px -15px #560000,
+    0 -15px #560000,
+    -15px 0 #560000,
+    0 15px #560000,
+    15px 0 #560000,
+    15px 15px #560000;
+}
+
+.n0::before {
+  background-color: #560000;
+  box-shadow:
+    -15px -15px red,
+    0 -15px red,
+    -15px 0 red,
+    0 15px red,
+    15px 0 red,
+    15px 15px red;
+}
+
+.n1::before {
+  background-color: #560000;
+  box-shadow:
+    -15px -15px #560000,
+    0 -15px red,
+    -15px 0 #560000,
+    0 15px #560000,
+    15px 0 red,
+    15px 15px #560000;
+}
+
+.n2::before {
+  background-color: red;
+  box-shadow:
+    -15px -15px red,
+    0 -15px red,
+    -15px 0 #560000,
+    0 15px red,
+    15px 0 #560000,
+    15px 15px red;
+}
+
+.n3::before {
+  background-color: red;
+  box-shadow:
+    -15px -15px red,
+    0 -15px red,
+    -15px 0 #560000,
+    0 15px #560000,
+    15px 0 red,
+    15px 15px red;
+}
+
+.n4::before {
+  background-color: red;
+  box-shadow:
+    -15px -15px #560000,
+    0 -15px red,
+    -15px 0 red,
+    0 15px #560000,
+    15px 0 red,
+    15px 15px #560000;
+}
+
+.n5::before {
+  background-color: red;
+  box-shadow:
+    -15px -15px red,
+    0 -15px #560000,
+    -15px 0 red,
+    0 15px #560000,
+    15px 0 red,
+    15px 15px red;
+}
+
+.n6::before {
+  background-color: red;
+  box-shadow:
+    -15px -15px red,
+    0 -15px #560000,
+    -15px 0 red,
+    0 15px red,
+    15px 0 red,
+    15px 15px red;
+}
+
+.n7::before {
+  background-color: #560000;
+  box-shadow:
+    -15px -15px red,
+    0 -15px red,
+    -15px 0 red,
+    0 15px #560000,
+    15px 0 red,
+    15px 15px #560000;
+}
+
+.n8::before {
+  background-color: red;
+  box-shadow:
+    -15px -15px red,
+    0 -15px red,
+    -15px 0 red,
+    0 15px red,
+    15px 0 red,
+    15px 15px red;
+}
+
+.n9::before {
+  background-color: red;
+  box-shadow:
+    -15px -15px red,
+    0 -15px red,
+    -15px 0 red,
+    0 15px #560000,
+    15px 0 red,
+    15px 15px red;
+}
