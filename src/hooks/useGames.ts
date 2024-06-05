@@ -277,27 +277,28 @@ export const useGame = () => {
   };
 
   const handleTempWidthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (parseInt(event.target.value, 10) < 0) {
-      setTempWidth(0);
-    } else {
+    if (0 <= parseInt(event.target.value, 10) && parseInt(event.target.value, 10) <= 999) {
       setTempWidth(parseInt(event.target.value, 10));
+    } else {
+      setTempWidth(0);
     }
   };
 
   const handleTempHeightChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (parseInt(event.target.value, 10) < 0) {
-      setTempHeight(0);
-    } else {
+    if (0 <= parseInt(event.target.value, 10) && parseInt(event.target.value, 10) <= 999) {
       setTempHeight(parseInt(event.target.value, 10));
+    } else {
+      setTempHeight(0);
     }
   };
 
   const handleTempBombsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (tempHeight * tempWidth <= parseInt(event.target.value, 10)) {
-      setTempBombs(tempHeight * tempWidth);
-      console.log('a');
-    } else {
-      setTempBombs(parseInt(event.target.value, 10));
+    if (0 <= parseInt(event.target.value, 10) && parseInt(event.target.value, 10) <= 999) {
+      if (tempHeight * tempWidth <= parseInt(event.target.value, 10)) {
+        setTempBombs(tempHeight * tempWidth);
+      } else {
+        setTempBombs(parseInt(event.target.value, 10));
+      }
     }
   };
   const isClear = bombMap.every((row, y) =>
